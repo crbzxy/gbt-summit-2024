@@ -16,7 +16,7 @@ export type FormState = {
 };
 
 interface RegistrationFormProps {
-  registrationType: string; // 'standard', 'presencial', 'remoto'
+  registrationType: string; // 'website', 'presencial', 'remoto'
   mode: "register" | "edit"; // Modo del formulario
   initialData?: Partial<FormState>; // Datos iniciales para el modo de edición
   onSubmit: (data: FormState) => Promise<void>; // Función para manejar el envío

@@ -59,6 +59,11 @@ export default function Login() {
     setShowPassword((prevState) => !prevState);
   };
 
+  // Redirige al usuario a la página de registro
+  const handleRegisterRedirect = () => {
+    router.push("/register"); // Asegúrate de que esta ruta coincida con la de tu página de registro
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-8 max-w-sm w-full bg-white rounded-lg shadow-md">
@@ -97,6 +102,18 @@ export default function Login() {
           </button>
         </form>
         {loading && <Loader />}
+        {/* Sugerencia de registro */}
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600">
+            ¿No tienes una cuenta?{" "}
+            <button
+              onClick={handleRegisterRedirect}
+              className="text-blue-600 hover:underline"
+            >
+              Regístrate aquí
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );

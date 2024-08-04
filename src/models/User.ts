@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   company: { type: String },
   position: { type: String },
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
-  registrationType: { type: String, enum: ['standard', 'presencial', 'remoto'], default: 'standard' },
+  registrationType: { type: String, enum: ['website', 'presencial', 'remoto'], default: 'website' },
   sessionToken: { type: String },
 });
 
