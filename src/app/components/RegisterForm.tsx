@@ -1,12 +1,11 @@
+// RegisterForm.tsx
+"use client";
+
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { useRouter } from "next/navigation";
-import InputField from "./InputFiled";
+import InputField from "../components/InputField";
 
-interface RegistrationFormProps {
-  registrationType: string; // 'standard', 'presencial', 'remoto'
-}
-
-type FormState = {
+// Definimos y exportamos FormState
+export type FormState = {
   name: string;
   email: string;
   password: string;
@@ -16,23 +15,32 @@ type FormState = {
   registrationType: string;
 };
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({
+interface RegistrationFormProps {
+  registrationType: string; // 'standard', 'presencial', 'remoto'
+  mode: "register" | "edit"; // Modo del formulario
+  initialData?: Partial<FormState>; // Datos iniciales para el modo de edición
+  onSubmit: (data: FormState) => Promise<void>; // Función para manejar el envío
+}
+
+const RegisterForm: React.FC<RegistrationFormProps> = ({
   registrationType,
+  mode,
+  initialData = {},
+  onSubmit,
 }) => {
   const [formData, setFormData] = useState<FormState>({
-    name: "",
-    email: "",
+    name: initialData.name ?? "",
+    email: initialData.email ?? "",
     password: "",
-    phone: "",
-    company: "",
-    position: "",
+    phone: initialData.phone ?? "",
+    company: initialData.company ?? "",
+    position: initialData.position ?? "",
     registrationType,
   });
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const router = useRouter();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -42,36 +50,28 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    setError(null);
 
     const { name, email, password, phone, company, position } = formData;
 
     // Validación básica
-    if (!name || !email || !password || !phone || !company || !position) {
+    if (
+      !name ||
+      !email ||
+      (!password && mode === "register") || // Solo requiere password en registro
+      !phone ||
+      !company ||
+      !position
+    ) {
       setError("Por favor, completa todos los campos.");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        router.push("/login");
-      } else {
-        const errorData = await response.json();
-        setError(
-          errorData.message || "Error de registro, por favor intente de nuevo."
-        );
-      }
-    } catch (error) {
-      setError("Error al conectar con el servidor, intente más tarde.");
+      await onSubmit(formData); // Usa la función de envío proporcionada
+    } catch (error: any) {
+      setError(error.message || "Error desconocido."); // Captura el mensaje de error
     } finally {
       setLoading(false);
     }
@@ -81,15 +81,18 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setShowPassword((prev) => !prev);
   };
 
+  // Extracción de la lógica ternaria a una variable
+  const buttonText = mode === "register" ? "Registrarse" : "Guardar Cambios";
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-8 max-w-md w-full bg-white rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
-          Registrarse
+          {mode === "register" ? "Registrarse" : "Editar Usuario"}
         </h1>
         {error && (
           <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded">
-            {error}
+            {error} {/* Muestra el mensaje de error */}
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -113,7 +116,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             name="password"
             value={formData.password}
             onChange={handleInputChange}
-            showToggle={true} // Añadimos la opción de mostrar/ocultar contraseña
+            showToggle={true}
             showPassword={showPassword}
             toggleShowPassword={toggleShowPassword}
           />
@@ -145,7 +148,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             }`}
             disabled={loading}
           >
-            {loading ? "Registrando..." : "Registrarse"}
+            {loading ? "Guardando..." : buttonText}
           </button>
         </form>
       </div>
@@ -153,4 +156,4 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   );
 };
 
-export default RegistrationForm;
+export default RegisterForm;

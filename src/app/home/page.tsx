@@ -76,7 +76,7 @@ export default function Home() {
               className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
               onClick={() => window.location.href='/register?type=home'}
             >
-              Registrarse
+              Registrarsed
             </button>
             <button 
               className="w-full p-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"

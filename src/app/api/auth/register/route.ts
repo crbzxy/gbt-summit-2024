@@ -44,3 +44,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'Error al registrar usuario', error }, { status: 500 });
   }
 }
+ 

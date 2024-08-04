@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import RegistrationForm from "../components/RegisterForm";
 
 // Define un tipo de usuario para tipado seguro
 type User = {
@@ -14,22 +15,34 @@ type User = {
   registrationType: string;
 };
 
+// Define el tipo FormState
+type FormState = {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  company: string;
+  position: string;
+  registrationType: string;
+};
+
 export default function Admin() {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null); // Usuario seleccionado para editar
   const router = useRouter();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        setError('Token no encontrado. Redirigiendo al login...');
-        router.push('/login');
+        setError("Token no encontrado. Redirigiendo al login...");
+        router.push("/login");
         return;
       }
 
       try {
-        const response = await fetch('/api/users', {
+        const response = await fetch("/api/users", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -40,14 +53,14 @@ export default function Admin() {
           setUsers(data.users);
         } else {
           const errorData = await response.json();
-          setError(errorData.message || 'Error al obtener usuarios');
-          router.push('/login');
+          setError(errorData.message || "Error al obtener usuarios");
+          router.push("/login");
         }
       } catch (err) {
         if (err instanceof Error) {
-          setError('Error al conectar con el servidor: ' + err.message);
+          setError("Error al conectar con el servidor: " + err.message);
         } else {
-          setError('Error al conectar con el servidor');
+          setError("Error al conectar con el servidor");
         }
       }
     };
@@ -57,13 +70,59 @@ export default function Admin() {
 
   // Función para manejar la redirección a la vista de usuario
   const handleUserViewRedirect = () => {
-    router.push('/live'); // Cambia la ruta a la vista del usuario no admin
+    router.push("/live"); // Cambia la ruta a la vista del usuario no admin
   };
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Elimina el token del almacenamiento local
-    router.push('/login'); // Redirige al usuario a la página de inicio de sesión
+    localStorage.removeItem("token"); // Elimina el token del almacenamiento local
+    router.push("/login"); // Redirige al usuario a la página de inicio de sesión
+  };
+
+  // Función para manejar la edición de usuario
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user); // Establece el usuario seleccionado para edición
+  };
+
+  // Función para enviar los datos actualizados del usuario
+  const handleUpdateUser = async (updatedData: FormState) => {
+    const token = localStorage.getItem("token");
+    if (!token || !selectedUser) return;
+
+    try {
+      const response = await fetch("/api/auth/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ token, userId: selectedUser._id, ...updatedData }),
+      });
+
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user._id === selectedUser._id ? updatedUser.user : user
+          )
+        );
+        setSelectedUser(null); // Cerrar el formulario de edición
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Error al actualizar el usuario");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError("Error al conectar con el servidor: " + err.message);
+      } else {
+        setError("Error al conectar con el servidor");
+      }
+    }
+  };
+
+  // Función para cerrar el modal
+  const closeModal = () => {
+    setSelectedUser(null);
   };
 
   return (
@@ -101,6 +160,7 @@ export default function Admin() {
                 <th className="py-3 px-4 text-left font-semibold">Empresa</th>
                 <th className="py-3 px-4 text-left font-semibold">Puesto</th>
                 <th className="py-3 px-4 text-left font-semibold">Tipo de Registro</th>
+                <th className="py-3 px-4 text-left font-semibold">Acciones</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -112,11 +172,45 @@ export default function Admin() {
                   <td className="py-4 px-4 text-sm">{user.company}</td>
                   <td className="py-4 px-4 text-sm">{user.position}</td>
                   <td className="py-4 px-4 text-sm">{user.registrationType}</td>
+                  <td className="py-4 px-4 text-sm">
+                    <button
+                      onClick={() => handleEditUser(user)}
+                      className="py-1 px-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    >
+                      Editar
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* Modal para edición de usuario */}
+        {selectedUser && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className=" rounded-lg overflow-hidden shadow-lg w-11/12 md:w-3/4 lg:w-1/2">
+              <div className="p-6">
+                <h2 className="text-2xl font-bold mb-4 text-center">Editar Usuario</h2>
+                <RegistrationForm
+
+                  registrationType={selectedUser.registrationType}
+                  mode="edit"
+                  initialData={selectedUser}
+                  onSubmit={handleUpdateUser}
+                />
+              </div>
+              <div className="flex justify-end p-4">
+                <button
+                  onClick={closeModal}
+                  className="py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
