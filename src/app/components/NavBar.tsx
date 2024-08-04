@@ -30,7 +30,7 @@ export default function Navbar() {
                     <div className="absolute inset-y-0 right-0 flex items-center lg:hidden">
                         <button
                             onClick={toggleMenu}
-                            className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            className="relative inline-flex items-center justify-center rounded-md p-2 text-blue-400 hover:bg-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             aria-controls="mobile-menu"
                             aria-expanded={isOpen}
                         >
@@ -47,17 +47,17 @@ export default function Navbar() {
                     <nav className="hidden lg:flex items-center justify-center ">
                         <ul className="flex space-x-8">
                             <li>
-                                <Link href="#registro" className="text-gray-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                <Link href="#registro" className="text-blue-600 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     Registro
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#panelistas" className="text-gray-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                <Link href="#panelistas" className="text-blue-600 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     Panelistas
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#agenda" className="text-gray-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                <Link href="#agenda" className="text-blue-600 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     Agenda
                                 </Link>
                             </li>
@@ -75,13 +75,13 @@ export default function Navbar() {
             {isOpen && (
                 <div className="lg:hidden" id="mobile-menu">
                     <div className="space-y-1 px-2 pb-3 pt-2">
-                        <Link href="#registro" className="block text-gray-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>
+                        <Link href="#registro" className="block text-blue-600 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>
                             Registro
                         </Link>
-                        <Link href="#panelistas" className="block text-gray-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>
+                        <Link href="#panelistas" className="block text-blue-600 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>
                             Panelistas
                         </Link>
-                        <Link href="#agenda" className="block text-gray-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>
+                        <Link href="#agenda" className="block text-blue-600 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>
                             Agenda
                         </Link>
                         <Link href="/login" className="block text-white bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-3xl text-base font-medium transition duration-300" onClick={closeMenu}>
