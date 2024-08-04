@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# GBT Summit 2024
 
-First, run the development server:
+Este proyecto es una aplicación web desarrollada con Next.js para gestionar el registro de usuarios en el evento GBT Summit 2024. La aplicación permite a los usuarios registrarse para asistir al evento de manera presencial o remota, y ofrece una interfaz de administración para los usuarios con rol de administrador.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tabla de Contenidos
+
+1. [Instalación](#instalación)
+2. [Variables de Entorno](#variables-de-entorno)
+3. [Comandos Disponibles](#comandos-disponibles)
+4. [Rutas del Frontend](#rutas-del-frontend)
+5. [Endpoints del Backend (API)](#endpoints-del-backend-api)
+6. [Detalles Adicionales](#detalles-adicionales)
+
+## Instalación
+
+Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local:
+
+1. Clona este repositorio:
+
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   ```
+
+2. Navega al directorio del proyecto:
+
+   ```bash
+   cd gbt-summit-2024
+   ```
+
+3. Instala las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+4. Configura las variables de entorno siguiendo las instrucciones en la sección [Variables de Entorno](#variables-de-entorno).
+
+5. Inicia el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+## Variables de Entorno
+
+Crea un archivo `.env.local` en la raíz del proyecto y configura las siguientes variables:
+
+```plaintext
+MONGODB_URI=<tu_mongodb_connection_string>
+JWT_SECRET=<tu_clave_secreta_jwt>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Comandos Disponibles
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev`: Inicia el servidor de desarrollo.
+- `npm run build`: Construye la aplicación para producción.
+- `npm start`: Inicia el servidor en modo producción.
+- `npm run lint`: Ejecuta el linter para el código del proyecto.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Rutas del Frontend
 
-## Learn More
+Aquí están las rutas principales del frontend:
 
-To learn more about Next.js, take a look at the following resources:
+- `/`: Página principal con contador para el evento.
+- `/login`: Página de inicio de sesión para los usuarios.
+- `/register`: Página de registro estándar con opción de tipo.
+- `/presencial/register`: Página de registro para asistentes presenciales.
+- `/remoto/register`: Página de registro para asistentes remotos.
+- `/admin`: Panel de administración (solo accesible para administradores).
+- `/user`: Página de usuario estándar para usuarios autenticados.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Endpoints del Backend (API)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Los siguientes endpoints están disponibles en la API:
 
-## Deploy on Vercel
+- **POST** `/api/auth/register`: Registro de un nuevo usuario.
+  - Parámetros esperados:
+    ```json
+    {
+      "name": "Nombre del Usuario",
+      "email": "correo@ejemplo.com",
+      "password": "contraseña123",
+      "phone": "1234567890",
+      "company": "Empresa XYZ",
+      "position": "Puesto",
+      "registrationType": "home" // Puede ser 'home', 'presencial', o 'remoto'
+    }
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **POST** `/api/auth/login`: Inicio de sesión de usuario.
+  - Parámetros esperados:
+    ```json
+    {
+      "email": "correo@ejemplo.com",
+      "password": "contraseña123"
+    }
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **PUT** `/api/auth/update`: Actualización de datos de usuario.
+  - Parámetros esperados:
+    ```json
+    {
+      "token": "JWT token",
+      "name": "Nuevo Nombre",
+      "phone": "9876543210",
+      "company": "Nueva Empresa",
+      "position": "Nuevo Puesto"
+    }
+    ```
+
+## Detalles Adicionales
+
+- El proyecto utiliza **Mongoose** para la gestión de la base de datos MongoDB.
+- La autenticación se maneja mediante **JSON Web Tokens (JWT)**.
+- El frontend está diseñado con **React** y utiliza **Tailwind CSS** para estilos.
+- La aplicación está configurada para desplegar imágenes desde un dominio específico.
+
+---
+
+¡Gracias por usar GBT Summit 2024! Si tienes alguna pregunta o sugerencia, no dudes en contactar.
