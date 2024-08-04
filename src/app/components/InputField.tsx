@@ -56,4 +56,7 @@ const InputField: React.FC<InputFieldProps> = memo(
   )
 );
 
+// Define el displayName para el componente memoizado
+InputField.displayName = "InputField";
+
 export default InputField;

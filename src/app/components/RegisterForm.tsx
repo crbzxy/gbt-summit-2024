@@ -82,13 +82,13 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
   };
 
   // Extracción de la lógica ternaria a una variable
-  const buttonText = mode === "register" ? "Registrarse" : "Guardar Cambios";
+  const buttonText = mode === "register" ? "Registro" : "Guardar Cambios";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-8 max-w-md w-full bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
-          {mode === "register" ? "Registrarse" : "Editar Usuario"}
+        <h1 className="text-3xl font-bold mb-6 text-blue-600 text-left">
+          {mode === "register" ? "Registro" : "Editar Usuario"}
         </h1>
         {error && (
           <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded">

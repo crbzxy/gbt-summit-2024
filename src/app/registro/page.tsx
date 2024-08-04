@@ -44,8 +44,9 @@ export default function RegisterRemotoPage() {
   };
 
   return (
-    <>
+    <div id="registro">
       <RegisterForm
+      
         registrationType="website"
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
@@ -55,6 +56,6 @@ export default function RegisterRemotoPage() {
         onClose={handleCloseModal}
         message={successMessage}
       />
-    </>
+    </div>
   );
 }

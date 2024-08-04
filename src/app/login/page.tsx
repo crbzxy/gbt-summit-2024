@@ -61,7 +61,7 @@ export default function Login() {
 
   // Redirige al usuario a la página de registro
   const handleRegisterRedirect = () => {
-    router.push("/register"); // Asegúrate de que esta ruta coincida con la de tu página de registro
+    router.push("/registro"); // Asegúrate de que esta ruta coincida con la de tu página de registro
   };
 
   return (

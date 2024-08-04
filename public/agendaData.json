@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "horario": "09:00 - 10:00",
+    "ponencia": "Introducción a React",
+    "panelista": "John Doe"
+  },
+  {
+    "id": 2,
+    "horario": "10:00 - 11:00",
+    "ponencia": "Técnicas de CSS",
+    "panelista": "Jane Smith"
+  }
+]
