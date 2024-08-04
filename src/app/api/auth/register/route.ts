@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
   // Verificación de campos requeridos
   if (!name || !email || !password) {
-    return NextResponse.json({ message: 'Faltan datos' }, { status: 400 });
+    return NextResponse.json({ message: 'Faltan datos favor de verificar' }, { status: 400 });
   }
 
   try {

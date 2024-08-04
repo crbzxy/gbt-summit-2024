@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   const { email, password } = await request.json();
 
   if (!email || !password) {
-    return NextResponse.json({ message: 'Faltan datos' }, { status: 400 });
+    return NextResponse.json({ message: 'Faltan datos favor de verificar' }, { status: 400 });
   }
 
   try {
