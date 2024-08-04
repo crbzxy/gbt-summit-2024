@@ -36,7 +36,7 @@ export default function Login() {
         if (role === 'admin') {
           router.push('/admin');
         } else {
-          router.push('/user');
+          router.push('/live');
         }
       } else {
         const errorData = await response.json();

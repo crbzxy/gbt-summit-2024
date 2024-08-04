@@ -18,7 +18,7 @@ export default function Index() {
         if (role === "admin") {
           router.push("/admin"); 
         } else {
-          router.push("/user"); 
+          router.push("/live"); 
         }
         setLoading(false); // Hide loader after navigation
       }

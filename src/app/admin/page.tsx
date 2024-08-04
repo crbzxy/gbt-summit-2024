@@ -57,7 +57,7 @@ export default function Admin() {
 
   // Función para manejar la redirección a la vista de usuario
   const handleUserViewRedirect = () => {
-    router.push('/user'); // Cambia la ruta a la vista del usuario no admin
+    router.push('/live'); // Cambia la ruta a la vista del usuario no admin
   };
 
   // Función para cerrar sesión

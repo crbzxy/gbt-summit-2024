@@ -38,5 +38,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/user/:path*'], // Rutas que requieren autenticación
+  matcher: ['/admin/:path*', '/live/:path*'], // Rutas que requieren autenticación
 };

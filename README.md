@@ -68,7 +68,7 @@ Aquí están las rutas principales del frontend:
 - `/presencial/register`: Página de registro para asistentes presenciales.
 - `/remoto/register`: Página de registro para asistentes remotos.
 - `/admin`: Panel de administración (solo accesible para administradores).
-- `/user`: Página de usuario estándar para usuarios autenticados.
+- `/live`: Página de usuario estándar para usuarios autenticados.
 
 ## Endpoints del Backend (API)
 
