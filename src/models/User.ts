@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   company: { type: String },
   position: { type: String },
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
-  registrationType: { type: String, enum: ['home', 'presencial', 'remoto'], default: 'home' },
+  registrationType: { type: String, enum: ['standard', 'presencial', 'remoto'], default: 'standard' },
+  sessionToken: { type: String },
 });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);

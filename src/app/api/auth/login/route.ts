@@ -35,8 +35,17 @@ export async function POST(request: Request) {
       expiresIn: '1h',
     });
 
+    // Actualizar el sessionToken en la base de datos
+    user.sessionToken = token;
+    await user.save();
+
     return NextResponse.json({ message: 'Inicio de sesión exitoso', token }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ message: 'Error al iniciar sesión', error }, { status: 500 });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('Error al iniciar sesión:', err.message);
+      return NextResponse.json({ message: 'Error al iniciar sesión', error: err.message }, { status: 500 });
+    }
+    console.error('Error desconocido al iniciar sesión');
+    return NextResponse.json({ message: 'Error desconocido al iniciar sesión' }, { status: 500 });
   }
 }

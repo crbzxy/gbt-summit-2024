@@ -7,7 +7,8 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
-    minutes: 0
+    minutes: 0,
+    seconds: 0 // Añadimos segundos al estado
   });
 
   useEffect(() => {
@@ -15,12 +16,13 @@ export default function Home() {
 
     const calculateTimeLeft = () => {
       const now = new Date();
-      const totalMinutes = Math.floor((targetDate.getTime() - now.getTime()) / (1000 * 60));
-      const days = Math.floor(totalMinutes / (60 * 24));
-      const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
-      const minutes = totalMinutes % 60;
+      const totalSeconds = Math.floor((targetDate.getTime() - now.getTime()) / 1000);
+      const days = Math.floor(totalSeconds / (60 * 60 * 24));
+      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+      const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+      const seconds = totalSeconds % 60;
 
-      setTimeLeft({ days, hours, minutes });
+      setTimeLeft({ days, hours, minutes, seconds });
     };
 
     calculateTimeLeft();
@@ -55,6 +57,12 @@ export default function Home() {
                   {timeLeft.minutes}
                 </div>
                 <p className="text-base lg:text-lg mt-2">minutos</p>
+              </div>
+              <div className="text-center">
+                <div className="text-5xl lg:text-6xl font-extrabold bg-white text-blue-900 rounded-full w-20 lg:w-24 h-20 lg:h-24 flex items-center justify-center animate-pulse">
+                  {timeLeft.seconds}
+                </div>
+                <p className="text-base lg:text-lg mt-2">segundos</p>
               </div>
             </div>
           </div>
