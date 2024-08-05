@@ -22,7 +22,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }), // Enviamos solo el correo electrónico
+        body: JSON.stringify({ email }),
       });
 
       if (response.ok) {
@@ -31,7 +31,6 @@ export default function Login() {
 
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
-        // Redireccionar según el rol del usuario
         if (role === "admin") {
           router.push("/admin");
         } else {
@@ -55,12 +54,23 @@ export default function Login() {
 
   // Redirige al usuario a la página de registro
   const handleRegisterRedirect = () => {
-    router.push("/registro"); // Asegúrate de que esta ruta coincida con la de tu página de registro
+    router.push("/registro");
+  };
+
+  // Regresa a la pantalla anterior
+  const handleBack = () => {
+    router.back();
   };
 
   return (
-    <div className="min-h-screen flex flex-col  items-center justify-center bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700">
-      <img src="/gbtwhite.png" alt="American Express Logo" width={120} height={40} className="mb-8" />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700">
+      <img
+        src="/gbtwhite.png"
+        alt="American Express Logo"
+        width={120}
+        height={40}
+        className="mb-8"
+      />
       <div className="p-8 max-w-sm w-full bg-white rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-6 text-blue-600 text-center">
           Iniciar Sesión
@@ -77,7 +87,7 @@ export default function Login() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            mode="register" // Añadir el modo de login
+            mode="register"
           />
           <button
             type="submit"
@@ -88,7 +98,6 @@ export default function Login() {
           </button>
         </form>
         {loading && <Loader />}
-        {/* Sugerencia de registro */}
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             ¿No tienes una cuenta?{" "}
@@ -99,6 +108,15 @@ export default function Login() {
               Regístrate aquí
             </button>
           </p>
+        </div>
+        {/* Botón para regresar */}
+        <div className="mt-4 text-center absolute left-8 top-7">
+          <button
+            onClick={handleBack}
+            className="text-sm text-white hover:underline"
+          >
+            &larr; Volver
+          </button>
         </div>
       </div>
     </div>
