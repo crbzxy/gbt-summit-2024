@@ -95,7 +95,7 @@ export default function Login() {
           />
           <button
             type="submit"
-            className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="w-full p-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors"
             disabled={loading}
           >
             {loading ? "Cargando..." : "Iniciar Sesión"}

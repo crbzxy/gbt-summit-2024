@@ -41,11 +41,11 @@ export default function Home() {
           {/* Imagen del ticket */}
           <div className="flex flex-col items-center mb-3 lg:mb-0">
             <Image
-              src="/Summit_2024_Logo.png"
+              src="/laclogo.png"
               alt="Event Ticket"
-              width={200}
+              width={300}
               height={200}
-              className="mb-4"
+              className="mb-8"
             />
           </div>
 

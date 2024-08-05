@@ -15,9 +15,9 @@ const Ponente: React.FC<PonenteProps> = ({ name, title, description, image, reve
         reverse ? 'md:flex-row-reverse' : ''
       } items-center   overflow-hidden my-8`}
     >
-      <div className="md:w-1/4 w-full p-4 flex justify-center items-center bg-blue-50">
+      <div className="md:w-1/4 w-full p-4 flex justify-center items-center ">
         <Image
-          className="w-32 h-32 md:w-48 md:h-48 rounded-full object-cover border-4 border-white shadow-md"
+          className="w-32 h-32 md:w-48 md:h-48 bg-transparent"
           src={image}
           alt={`Image of ${name}`}
           width={192}

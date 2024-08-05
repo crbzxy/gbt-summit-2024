@@ -3,10 +3,10 @@ import Image from 'next/image'; // Importar el componente Image de next/image
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-blue-900 text-white py-8">
+        <footer className="bg-[#00175A] text-white py-8">
             <div className="container mx-auto px-4 flex-col items-center max-w-6xl">
                 <Image
-                    src="/logo.png" // Cambia esta ruta por la ubicación real de tu logo
+                    src="/gbtwhite.png" // Cambia esta ruta por la ubicación real de tu logo
                     alt="American Express Global Business Travel Logo"
                     className="mb-4"
                     width={150} // Ajusta el tamaño del logo según sea necesario

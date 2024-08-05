@@ -82,75 +82,80 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
   };
 
   // Extracción de la lógica ternaria a una variable
-  const buttonText = mode === "register" ? "Registro" : "Guardar Cambios";
+  const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="p-8 max-w-md w-full bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-blue-600 text-left">
-          {mode === "register" ? "Registro" : "Editar Usuario"}
-        </h1>
-        {error && (
-          <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded">
-            {error} {/* Muestra el mensaje de error */}
-          </div>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <InputField
-            type="text"
-            placeholder="Nombre"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-          <InputField
-            type="email"
-            placeholder="Correo"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-          <InputField
-            type="password"
-            placeholder="Contraseña"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            showToggle={true}
-            showPassword={showPassword}
-            toggleShowPassword={toggleShowPassword}
-          />
-          <InputField
-            type="text"
-            placeholder="Teléfono"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-          />
-          <InputField
-            type="text"
-            placeholder="Empresa"
-            name="company"
-            value={formData.company}
-            onChange={handleInputChange}
-          />
-          <InputField
-            type="text"
-            placeholder="Puesto"
-            name="position"
-            value={formData.position}
-            onChange={handleInputChange}
-          />
-          <button
-            type="submit"
-            className={`w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={loading}
-          >
-            {loading ? "Guardando..." : buttonText}
-          </button>
-        </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-indigo-500 via-blue-900 to-indigo-500">
+      <div className="flex flex-col md:flex-row ">
+        <div className="h-auto">
+          <img src="/tarjeta.png" alt="Tarjeta" className="w-full h-auto rounded-lg" />
+        </div>
+        <div className="md:w-1/2 p-8">
+          <h1 className="text-3xl font-bold mb-6 text-white text-left">
+            {mode === "register" ? "Registro" : "Editar Usuario"}
+          </h1>
+          {error && (
+            <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded">
+              {error} {/* Muestra el mensaje de error */}
+            </div>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <InputField
+              type="text"
+              placeholder="Nombre"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+            <InputField
+              type="email"
+              placeholder="Correo"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+            <InputField
+              type="password"
+              placeholder="Contraseña"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              showToggle={true}
+              showPassword={showPassword}
+              toggleShowPassword={toggleShowPassword}
+            />
+            <InputField
+              type="text"
+              placeholder="Teléfono"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+            <InputField
+              type="text"
+              placeholder="Empresa"
+              name="company"
+              value={formData.company}
+              onChange={handleInputChange}
+            />
+            <InputField
+              type="text"
+              placeholder="Puesto"
+              name="position"
+              value={formData.position}
+              onChange={handleInputChange}
+            />
+            <button
+              type="submit"
+              className={`w-full p-3 bg-blue-200 text-blue-900 font-semibold rounded-xl hover:bg-blue-700 transition-colors ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
+            >
+              {loading ? "Guardando..." : buttonText}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
