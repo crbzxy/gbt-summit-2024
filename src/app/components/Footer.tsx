@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
                 <div className="flex-1 text-left">
                     <p className="text-sm mb-2">
                         Los servicios de American Express Global Business Travel utilizan información personal como se describe en el{' '}
-                        <a href="/privacy-policy" className="underline">
+                        <a href="https://privacy.amexgbt.com/es-la/statement" className="underline">
                             Aviso de privacidad global de GBT
                         </a>.
                     </p>

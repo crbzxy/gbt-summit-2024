@@ -3,12 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
-import InputField from "../components/InputField"; // Importa el componente InputField
+import InputField from "../components/InputField";
 
 export default function Login() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -24,7 +22,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email }), // Enviamos solo el correo electrónico
       });
 
       if (response.ok) {
@@ -55,17 +53,14 @@ export default function Login() {
     }
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-
   // Redirige al usuario a la página de registro
   const handleRegisterRedirect = () => {
     router.push("/registro"); // Asegúrate de que esta ruta coincida con la de tu página de registro
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col  items-center justify-center bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700">
+      <img src="/gbtwhite.png" alt="American Express Logo" width={120} height={40} className="mb-8" />
       <div className="p-8 max-w-sm w-full bg-white rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-6 text-blue-600 text-center">
           Iniciar Sesión
@@ -82,16 +77,7 @@ export default function Login() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
-          <InputField
-            type={showPassword ? "text" : "password"}
-            placeholder="Contraseña"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            showToggle={true}
-            showPassword={showPassword}
-            toggleShowPassword={toggleShowPassword}
+            mode="register" // Añadir el modo de login
           />
           <button
             type="submit"

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
@@ -7,25 +6,23 @@ import User from '@/models/User';
 export async function POST(request: Request) {
   await dbConnect();
 
-  const { email, password } = await request.json();
+  // Solo requerimos el email
+  const { email } = await request.json();
 
-  if (!email || !password) {
-    return NextResponse.json({ message: 'Faltan datos favor de verificar' }, { status: 400 });
+  // Verificar que el correo esté presente
+  if (!email) {
+    return NextResponse.json({ message: 'El correo electrónico es requerido.' }, { status: 400 });
   }
 
   try {
+    // Verificar si el usuario existe en la base de datos
     const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json({ message: 'Usuario no encontrado' }, { status: 401 });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return NextResponse.json({ message: 'Contraseña incorrecta' }, { status: 401 });
-    }
-
+    // Generar un token JWT para el usuario
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       return NextResponse.json({ message: 'JWT Secret no definido' }, { status: 500 });
@@ -35,7 +32,7 @@ export async function POST(request: Request) {
       expiresIn: '1h',
     });
 
-    // Actualizar el sessionToken en la base de datos
+    // Actualizar el sessionToken en la base de datos si es necesario
     user.sessionToken = token;
     await user.save();
 

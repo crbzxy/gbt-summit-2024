@@ -15,11 +15,10 @@ type User = {
   registrationType: string;
 };
 
-// Define el tipo FormState
+// Define el tipo FormState, eliminando la contraseña
 type FormState = {
   name: string;
   email: string;
-  password: string;
   phone: string;
   company: string;
   position: string;
@@ -189,11 +188,10 @@ export default function Admin() {
         {/* Modal para edición de usuario */}
         {selectedUser && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className=" rounded-lg overflow-hidden shadow-lg w-11/12 md:w-3/4 lg:w-1/2">
+            <div className="rounded-lg overflow-hidden shadow-lg w-11/12 md:w-3/4 lg:w-1/2">
               <div className="p-6">
                 <h2 className="text-2xl font-bold mb-4 text-center">Editar Usuario</h2>
                 <RegistrationForm
-
                   registrationType={selectedUser.registrationType}
                   mode="edit"
                   initialData={selectedUser}
