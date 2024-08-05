@@ -8,23 +8,26 @@ import Link from 'next/link';
 export default function UserPage() {
   const router = useRouter();
 
-  // Verificar la presencia del token al montar el componente
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-    }
-  }, [router]);
-
   // Estado para mostrar el dropdown del menú de usuario
   const [showDropdown, setShowDropdown] = useState(false);
 
   // Función de logout
   const handleLogout = () => {
     localStorage.removeItem('token'); // Eliminar el token de localStorage
-    router.push('/login'); // Redirigir al usuario a la página de inicio de sesión
+    setTimeout(() => {
+      router.replace('/'); // Reemplaza '/login' con tu ruta de inicio si es diferente
+    }, 100); // Pequeño retraso de 100ms
   };
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.replace('/'); // Reemplaza '/login' con tu ruta de inicio si es diferente
+      }
+    };
 
+    checkAuth();
+  }, [router]);
   // Función para alternar la visibilidad del dropdown
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -73,8 +76,7 @@ export default function UserPage() {
                   id='user-menu-button'
                   aria-expanded='false'
                   aria-haspopup='true'
-                  onClick={toggleDropdown}
-                >
+                  onClick={toggleDropdown}>
                   <span className='sr-only'>Open user menu</span>
                   <svg
                     className='h-6 w-6'
@@ -98,8 +100,7 @@ export default function UserPage() {
                     role='menu'
                     aria-orientation='vertical'
                     aria-labelledby='user-menu-button'
-                    tabIndex={-1}
-                  >
+                    tabIndex={-1}>
                     <Link
                       href='#'
                       className='block px-4 py-2 text-sm text-gray-700'
@@ -219,8 +220,6 @@ export default function UserPage() {
           </div>
         </div>
       </nav>
-
-    
 
       {/* Contenido principal */}
       <main className='bg-gray-100'>
