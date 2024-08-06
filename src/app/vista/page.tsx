@@ -1,0 +1,124 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Loader from "../components/Loader";
+import InputField from "../components/InputField";
+
+export default function Vista() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+
+        const { role } = JSON.parse(atob(token.split(".")[1]));
+
+        if (role === "admin") {
+          router.push("/admin");
+        } else {
+          router.push("/live");
+        }
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Error de autenticación");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError("Error al conectar con el servidor: " + err.message);
+      } else {
+        setError("Error al conectar con el servidor");
+      }
+      console.error("Error al conectar con el servidor", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Redirige al usuario a la página de registro
+  const handleRegisterRedirect = () => {
+    router.push("/registro");
+  };
+
+  // Regresa a la pantalla anterior
+  const handleBack = () => {
+    router.back();
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700">
+      <img
+        src="/gbtwhite.png"
+        alt="American Express Logo"
+        width={120}
+        height={40}
+        className="mb-8"
+      />
+      <div className="p-8 max-w-sm w-full bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-blue-600 text-center">
+          Iniciar Sesión
+        </h1>
+        {error && (
+          <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded-lg border border-red-200">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <InputField
+            type="email"
+            placeholder="Correo"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            mode="register"
+          />
+          <button
+            type="submit"
+            className="w-full p-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors"
+            disabled={loading}
+          >
+            {loading ? "Cargando..." : "Iniciar Sesión"}
+          </button>
+        </form>
+        {loading && <Loader />}
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600">
+            ¿No tienes una cuenta?{" "}
+            <button
+              onClick={handleRegisterRedirect}
+              className="text-blue-600 hover:underline"
+            >
+              Regístrate aquí
+            </button>
+          </p>
+        </div>
+        {/* Botón para regresar */}
+        <div className="mt-4 text-center absolute left-8 top-7">
+          <button
+            onClick={handleBack}
+            className="text-sm text-white hover:underline"
+          >
+            &larr; Volver
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
