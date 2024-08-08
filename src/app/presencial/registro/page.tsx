@@ -1,15 +1,22 @@
-// remoto/register/page.tsx
+// presencial/registro/page.tsx
 "use client";
 
 import React, { useState } from 'react';
 import RegisterForm, { FormState } from "../../components/RegisterForm";
 import SuccessModal from '../../components/SuccessModal';
 import { useRouter } from 'next/navigation'; // Importa el hook de navegación
+import Navbar from '@/app/components/NavBar';
+import Home from '@/app/home/page';
+import Agenda from '@/app/components/Agenda';
+import Footer from '@/app/components/Footer';
 
 export default function RegisterRemotoPage() {
   const [showModal, setShowModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter(); // Inicializa el router
+
+
+
 
   const handleFormSubmit = async (data: FormState) => {
     console.log("Datos del formulario:", data);
@@ -45,16 +52,25 @@ export default function RegisterRemotoPage() {
 
   return (
     <>
+
+      <Navbar /> {/* Use the Navbar component here */}
+      <Home />
+      {/* <Register /> */}
       <RegisterForm
         registrationType="presencial"
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
       />
+      {/*<PonentesPage />*/}
+      <Agenda />
+      <Footer />
+
       <SuccessModal
         show={showModal}
         onClose={handleCloseModal}
         message={successMessage}
       />
+
     </>
   );
 }

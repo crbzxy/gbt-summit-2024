@@ -229,6 +229,7 @@ export default function UserPage() {
           {/* Video */}
           <div className='relative w-full overflow-hidden bg-white shadow-lg rounded-lg' style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
             <iframe
+              title='gbt-summit'
               src="https://vimeo.com/event/4494599/embed/a839373f58/interaction"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"

@@ -37,8 +37,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     registrationType,
   });
 
-  const { countries, loading: countriesLoading, error: countriesError } =
-    useCountries();
+  const { countries, loading: countriesLoading, error: countriesError } = useCountries();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,15 +49,21 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const validateForm = () => {
+    const { name, email, phone, company, position, country } = formData;
+    if (!name || !email || !phone || !company || !position || !country) {
+      setError("Por favor, completa todos los campos.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const { name, email, phone, company, position, country } = formData;
-
-    if (!name || !email || !phone || !company || !position || !country) {
-      setError("Por favor, completa todos los campos.");
+    if (!validateForm()) {
       setLoading(false);
       return;
     }
@@ -72,16 +77,20 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     }
   };
 
+  const sortedCountries = countries
+    ? countries.sort((a, b) => {
+        if (a.code === "MX") return -1;
+        if (b.code === "MX") return 1;
+        return a.name.localeCompare(b.name);
+      })
+    : [];
+
   const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
+  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700";
+  const textClass = mode === "edit" ? "text-black" : "text-white";
 
   return (
-    <div
-      className={`min-h-screen flex items-center justify-center ${
-        mode === "edit"
-          ? "bg-white"
-          : "bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700"
-      }`}
-    >
+    <div id="registro" className={`min-h-screen flex items-center justify-center ${backgroundClass}`}>
       <div className="flex flex-col md:flex-row">
         {mode !== "edit" && (
           <div className="h-auto">
@@ -93,11 +102,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
           </div>
         )}
         <div className="p-8">
-          <h1
-            className={`text-3xl font-bold mb-6 ${
-              mode === "edit" ? "text-black" : "text-white"
-            } text-left`}
-          >
+          <h1 className={`text-3xl font-bold mb-6 ${textClass} text-left`}>
             {mode === "register" ? "Registro" : "Editar Usuario"}
           </h1>
           {error && (
@@ -112,7 +117,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="email"
@@ -120,7 +125,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="text"
@@ -128,7 +133,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="text"
@@ -136,7 +141,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="company"
               value={formData.company}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="text"
@@ -144,7 +149,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="position"
               value={formData.position}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             {countriesLoading ? (
               <p>Cargando países...</p>
@@ -158,7 +163,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
                 className="w-full p-3 bg-white border border-gray-300 rounded-lg"
               >
                 <option value="">Seleccione un país</option>
-                {countries.map((country) => (
+                {sortedCountries.map((country) => (
                   <option key={country.code} value={country.code}>
                     {country.name}
                   </option>
@@ -168,9 +173,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
             <button
               type="submit"
               className={`w-full p-3 ${
-                mode === "edit"
-                  ? "bg-blue-500 text-white"
-                  : "bg-blue-200 text-blue-900"
+                mode === "edit" ? "bg-blue-500 text-white" : "bg-blue-200 text-blue-900"
               } font-semibold rounded-xl hover:bg-blue-700 transition-colors hover:text-white ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}

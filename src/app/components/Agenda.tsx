@@ -41,9 +41,9 @@ const Agenda: React.FC = () => {
             <table className="w-full text-left border-collapse max-w-5xl m-auto">
                 <thead className="rounded-t-lg">
                     <tr className="bg-blue-600 text-white">
-                        <th className="p-4 first:rounded-tl-lg last:rounded-tr-lg">Horario</th>
-                        <th className="p-4 first:rounded-tl-lg last:rounded-tr-lg">Ponencia</th>
-                        <th className="p-4 first:rounded-tl-lg last:rounded-tr-lg">Panelista</th>
+                        <th className="p-4 first:rounded-tl-lg last:rounded-tr-lg" style={{ width: '15%' }}>Horario</th>
+                        <th className="p-4 first:rounded-tl-lg last:rounded-tr-lg" style={{ width: '40%' }}>Ponencia</th>
+                        <th className="p-4 first:rounded-tl-lg last:rounded-tr-lg" style={{ width: '45%' }}>Panelista</th>
                     </tr>
                 </thead>
                 <tbody>
