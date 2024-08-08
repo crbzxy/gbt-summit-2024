@@ -18,6 +18,7 @@ export default function UserPage() {
       router.replace('/'); // Reemplaza '/login' con tu ruta de inicio si es diferente
     }, 100); // Pequeño retraso de 100ms
   };
+
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem('token');
@@ -28,6 +29,7 @@ export default function UserPage() {
 
     checkAuth();
   }, [router]);
+
   // Función para alternar la visibilidad del dropdown
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -225,15 +227,14 @@ export default function UserPage() {
       <main className='bg-gray-100'>
         <div className='mx-auto px-4 py-6 sm:px-6 lg:px-8 flex flex-col gap-6'>
           {/* Video */}
-          <div className='relative w-full overflow-hidden bg-white shadow-lg rounded-lg'>
-            <video
-              className='w-full h-auto'
-              controls
-              poster='/poster-image.jpg' // Imagen del video si se necesita
-            >
-              <source src='/video.mp4' type='video/mp4' />
-              Your browser does not support the video tag.
-            </video>
+          <div className='relative w-full overflow-hidden bg-white shadow-lg rounded-lg' style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+            <iframe
+              src="https://vimeo.com/event/4494599/embed/a839373f58/interaction"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}
+            ></iframe>
           </div>
 
           {/* Agenda */}
