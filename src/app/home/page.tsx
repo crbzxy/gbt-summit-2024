@@ -52,14 +52,14 @@ export default function Home() {
 
         {/* Descripción */}
         <div className="w-full max-w-5xl mb-2 text-left px-4">
-          <h2 className="text-sm md:text-base font-bold text-blue-900 leading-relaxed mb-4">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
             Como cada año, American Express Global Business Travel (Amex GBT)
             celebra el “LAC Business Travel Summit” bajo el concepto de
             “Impulsando conexiones de valor” en la edición de este año. Un evento
             que resalta las conexiones con valor agregado que se crean entre Amex
             GBT y nuestros socios de negocios, compartiendo experiencias, buenas
             prácticas, casos de éxito y estrategias de gestión para travel managers.
-          </h2>
+          </p>
           <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
             En la conferencia magistral, nos honrará con su presencia Gloria
             Guevara Manzo, expresidenta del Consejo Mundial de Viajes y Turismo
@@ -67,7 +67,7 @@ export default function Home() {
             Saudita, Mohamed Al Khateeb. Ella es miembro del Consejo de Amex
             GBT y nos platicará sobre el crecimiento de los viajes de negocio.
           </p>
-          <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
             Esperamos que este evento le ayude a conocer cómo Amex GBT busca
             constantemente las conexiones de valor entre sus socios estratégicos y
             logre ampliar su visión sobre los viajes corporativos.
@@ -83,29 +83,14 @@ export default function Home() {
 
 
         {/* Patrocinadores */}
-        <h2 className="text-3xl font-bold text-blue-900 text-center mb-4">
+        <h2 className="text-3xl font-bold text-blue-900 text-center mb-16">
           Nuestros patrocinadores:
         </h2>
         <div className="flex flex-wrap justify-center items-center gap-4">
           <div className="flex justify-center items-center">
-            <Image src="/amdl.png" alt="Aeromexico" width={420} height={80} />
+            <Image src="/all_logos.svg" alt="Aeromexico" width={420} height={80} />
           </div>
-          <div className="flex flex-row justify-center items-center">
-            <Image
-              src="/marriot.png"
-              alt="Delta"
-              width={80}
-              height={40}
-              className="w-12 md:w-24 lg:w-30 h-auto"
-            />
-            <Image
-              src="/em.jpg"
-              alt="Marriott Bonvoy"
-              width={80}
-              height={40}
-              className="w-12 md:w-23 lg:w-30 h-auto"
-            />
-          </div>
+       
 
         </div>
 

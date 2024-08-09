@@ -51,7 +51,7 @@ export default function UserPage() {
             </div>
 
             {/* Navegación */}
-            <div className='hidden md:block'>
+            {/* <div className='hidden md:block'>
               <div className='ml-10 flex items-baseline space-x-4'>
                 <Link
                   href='#'
@@ -66,7 +66,7 @@ export default function UserPage() {
                   Agenda
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             {/* Menú de Usuario */}
             <div className='hidden md:block'>
@@ -239,7 +239,7 @@ export default function UserPage() {
           </div>
 
           {/* Agenda */}
-          <Agenda />
+          {/* <Agenda /> */}
         </div>
       </main>
     </div>
