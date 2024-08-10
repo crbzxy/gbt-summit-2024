@@ -96,7 +96,7 @@ export default function Home() {
 
         {/* Temporizador */}
         <div className="flex flex-col items-center mb-6 lg:mb-0 mt-8">
-          <h2 className="text-xl lg:text-2xl font-extrabold text-blue-900 mb-4 text-center">
+          <h2 className="text-xl lg:text-2xl font-extrabold text-blue-900 mb-4 mt-10 text-center">
             Faltan
           </h2>
           <div className="flex flex-wrap justify-center gap-2 mb-8 text-center">

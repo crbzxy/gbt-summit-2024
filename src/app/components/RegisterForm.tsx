@@ -79,10 +79,10 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
 
   const sortedCountries = countries
     ? countries.sort((a, b) => {
-        if (a.code === "MX") return -1;
-        if (b.code === "MX") return 1;
-        return a.name.localeCompare(b.name);
-      })
+      if (a.code === "MX") return -1;
+      if (b.code === "MX") return 1;
+      return a.name.localeCompare(b.name);
+    })
     : [];
 
   const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
@@ -172,11 +172,9 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
             )}
             <button
               type="submit"
-              className={`w-full p-3 ${
-                mode === "edit" ? "bg-blue-500 text-white" : "bg-blue-200 text-blue-900"
-              } font-semibold rounded-xl hover:bg-blue-700 transition-colors hover:text-white ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`w-full p-3 bg-[rgb(153,236,255)] ${mode === "edit" ? "text-white" : "bg-blue-200 text-[#1e2256]"
+                } font-semibold rounded-xl hover:bg-blue-700 transition-colors hover:text-white ${loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               disabled={loading}
             >
               {loading ? "Guardando..." : buttonText}
