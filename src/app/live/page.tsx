@@ -227,10 +227,10 @@ export default function UserPage() {
       <main className='bg-gray-100'>
         <div className='mx-auto px-4 py-6 sm:px-6 lg:px-8 flex flex-col gap-6'>
           {/* Video */}
-          <div className='relative w-full overflow-hidden bg-white shadow-lg rounded-lg' style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+          <div className='relative w-full h-4/5 overflow-hidden bg-white shadow-lg rounded-lg' style={{ padding: '46.25% 0 0 0', position: 'relative' }}>
             <iframe
               title='gbt-summit'
-              src="https://vimeo.com/event/4494599/embed/a839373f58/interaction"
+              src="https://vimeo.com/event/4499457/embed/0800326aa0/interaction"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen

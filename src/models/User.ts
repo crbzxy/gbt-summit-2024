@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   position: { type: String },
   country: { type: String, required: true }, // Nuevo campo para el país
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
-  registrationType: { type: String, enum: ['website', 'presencial', 'remoto'], default: 'website' },
+  registrationType: { type: String, enum: ['general', 'presencial', 'virtual'], default: 'general' },
   sessionToken: { type: String },
 });
 

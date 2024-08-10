@@ -23,7 +23,7 @@ export default function Navbar() {
                 <div className="relative flex h-16 items-center justify-evenly">
                     {/* Logo */}
                     <div className="flex items-center">
-                        <Image src="/logo.png" alt="American Express Logo" width={120} height={40} />
+                        <Image src="/logo.svg" alt="American Express Logo" width={120} height={40} />
                     </div>
 
                     {/* Botón del Menú para Móviles */}
