@@ -37,7 +37,7 @@ export default function Index() {
       <Navbar /> {/* Use the Navbar component here */}
       {loading && <Loader />} {/* Display the loader if loading is true */}
       <Home />
-      {/* <Register /> */}
+      <Register />
       {/*<PonentesPage />*/}
       <Agenda />
       <Footer />

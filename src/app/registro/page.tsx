@@ -47,7 +47,7 @@ export default function RegisterRemotoPage() {
     <div id="registro">
       <RegisterForm
       
-        registrationType="website"
+        registrationType="general"
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
       />
