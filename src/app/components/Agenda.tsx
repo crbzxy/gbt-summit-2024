@@ -55,9 +55,9 @@ const Agenda: React.FC = () => {
                     {items.map((item) => (
                         <tr
                             key={item.id} 
-                            className="rounded-full border-collapse hover:shadow-sm border-y-8 transition duration-300 ease-in-out transform hover:scale-105 text-blue-800 overflow-hidden"
+                            className="rounded-full border-collapse hover:shadow-sm border-y-8 transition duration-300 ease-in-out transform hover:scale-105 text-[#02390] overflow-hidden"
                             style={{
-                                backgroundImage: 'radial-gradient(circle, rgba(0,111,207,0.5), rgba(102,169,226,0.2))',
+                                backgroundImage: 'radial-gradient(circle, rgba(59,160,228,1), rgba(180,235,255,1))',
                                 backgroundSize: '150% 150%',
                                 backgroundPosition: 'center',
                                 borderColor: 'white',

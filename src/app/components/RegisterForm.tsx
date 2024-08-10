@@ -86,7 +86,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     : [];
 
   const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
-  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700";
+  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]";
   const textClass = mode === "edit" ? "text-black" : "text-white";
 
   return (
