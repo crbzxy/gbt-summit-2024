@@ -63,7 +63,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]">
       <img
         src="/gbtwhite.png"
         alt="American Express Logo"

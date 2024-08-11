@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import InputField from "../components/InputField";
 import useCountries from "../hooks/useCountries";
@@ -12,6 +10,8 @@ export type FormState = {
   position: string;
   country: string;
   registrationType: string;
+  password?: string;
+  role?: string;
 };
 
 interface RegistrationFormProps {
@@ -19,6 +19,7 @@ interface RegistrationFormProps {
   mode: "register" | "edit";
   initialData?: Partial<FormState>;
   onSubmit: (data: FormState) => Promise<void>;
+  isAdmin?: boolean;
 }
 
 const RegisterForm: React.FC<RegistrationFormProps> = ({
@@ -26,6 +27,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
   mode,
   initialData = {},
   onSubmit,
+  isAdmin = false,
 }) => {
   const [formData, setFormData] = useState<FormState>({
     name: initialData.name ?? "",
@@ -35,6 +37,8 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     position: initialData.position ?? "",
     country: initialData.country ?? "",
     registrationType,
+    password: "",  // Inicializar el campo de contraseña con una cadena vacía
+    role: isAdmin ? "admin" : "user",  // Establecer el rol basado en isAdmin
   });
 
   const { countries, loading: countriesLoading, error: countriesError } = useCountries();
@@ -46,13 +50,17 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({ ...prevData, [name]: value ?? "" }));  // Asegurar que el valor nunca sea undefined
   };
 
   const validateForm = () => {
-    const { name, email, phone, company, position, country } = formData;
+    const { name, email, phone, company, position, country, password } = formData;
     if (!name || !email || !phone || !company || !position || !country) {
       setError("Por favor, completa todos los campos.");
+      return false;
+    }
+    if (isAdmin && !password) {
+      setError("La contraseña es requerida para los administradores.");
       return false;
     }
     return true;
@@ -79,14 +87,14 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
 
   const sortedCountries = countries
     ? countries.sort((a, b) => {
-      if (a.code === "MX") return -1;
-      if (b.code === "MX") return 1;
-      return a.name.localeCompare(b.name);
-    })
+        if (a.code === "MX") return -1;
+        if (b.code === "MX") return 1;
+        return a.name.localeCompare(b.name);
+      })
     : [];
 
   const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
-  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]";
+  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]";
   const textClass = mode === "edit" ? "text-black" : "text-white";
 
   return (
@@ -115,7 +123,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Nombre"
               name="name"
-              value={formData.name}
+              value={formData.name ?? ""}  // Usar valor por defecto si es undefined
               onChange={handleInputChange}
               mode={mode}
             />
@@ -123,7 +131,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="email"
               placeholder="Correo"
               name="email"
-              value={formData.email}
+              value={formData.email ?? ""}  // Usar valor por defecto si es undefined
               onChange={handleInputChange}
               mode={mode}
             />
@@ -131,7 +139,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Teléfono"
               name="phone"
-              value={formData.phone}
+              value={formData.phone ?? ""}  // Usar valor por defecto si es undefined
               onChange={handleInputChange}
               mode={mode}
             />
@@ -139,7 +147,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Empresa"
               name="company"
-              value={formData.company}
+              value={formData.company ?? ""}  // Usar valor por defecto si es undefined
               onChange={handleInputChange}
               mode={mode}
             />
@@ -147,7 +155,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Puesto"
               name="position"
-              value={formData.position}
+              value={formData.position ?? ""}  // Usar valor por defecto si es undefined
               onChange={handleInputChange}
               mode={mode}
             />
@@ -158,7 +166,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
             ) : (
               <select
                 name="country"
-                value={formData.country}
+                value={formData.country ?? ""}  // Usar valor por defecto si es undefined
                 onChange={handleInputChange}
                 className="w-full p-3 bg-white border border-gray-300 rounded-lg"
               >
@@ -170,9 +178,19 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
                 ))}
               </select>
             )}
+            {isAdmin && (
+              <InputField
+                type="password"
+                placeholder="Contraseña"
+                name="password"
+                value={formData.password ?? ""}  // Usar valor por defecto si es undefined
+                onChange={handleInputChange}
+                mode={mode}
+              />
+            )}
             <button
               type="submit"
-              className={`w-full p-3 bg-[rgb(153,236,255)] ${mode === "edit" ? "text-white" : "bg-blue-200 text-[#1e2256]"
+              className={`w-full p-3 bg-[rgb(153,236,255)] ${mode === "edit" ? "text-blue" : "bg-[rgb(153,236,255)] text-[#1e2256]"
                 } font-semibold rounded-xl hover:bg-blue-700 transition-colors hover:text-white ${loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               disabled={loading}
