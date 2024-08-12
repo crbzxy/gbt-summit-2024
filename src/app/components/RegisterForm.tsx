@@ -21,6 +21,7 @@ interface RegistrationFormProps {
   initialData?: Partial<FormState>;
   onSubmit: (data: FormState) => Promise<void>;
   isAdmin?: boolean;
+  registrationType?: string;
 }
 
 const RegisterForm: React.FC<RegistrationFormProps> = ({
