@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
+import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar tokens únicos
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -20,6 +21,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'El correo electrónico ya está registrado.' }, { status: 409 });
     }
 
+    // Generar un logoutToken único
+    const logoutToken = uuidv4();
+
     // Crear un nuevo usuario con todos los campos inicializados
     const user = new User({
       name,
@@ -34,6 +38,7 @@ export async function POST(request: Request) {
       sessionExpiresAt: null, // Sin fecha de expiración de sesión
       lastActiveAt: null, // Sin actividad inicial
       deviceId: null, // Sin dispositivo inicial
+      logoutToken, // Asignación del logoutToken generado
     });
 
     // Guardar el usuario en la base de datos

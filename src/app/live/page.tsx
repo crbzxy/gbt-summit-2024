@@ -10,35 +10,40 @@ export default function UserPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Función de logout
-  const handleLogout = async () => {
-    const token = localStorage.getItem('token');
-    const logoutToken = localStorage.getItem('logoutToken');
+// Función de logout
+const handleLogout = async () => {
+  const token = localStorage.getItem('token');
+  const logoutToken = localStorage.getItem('logoutToken');
 
-    if (!token || !logoutToken) {
-      console.error('Token o logoutToken no están disponibles');
-      return;
-    }
+  // Verifica que el token y logoutToken no sean undefined
+  if (!token || !logoutToken) {
+    console.error('Token o logoutToken no están disponibles o son inválidos');
+    return;
+  }
 
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,  // Agregar el token al encabezado
-        },
-        body: JSON.stringify({ logoutToken }),
-      });
-    } catch (err) {
-      console.error('Error al cerrar sesión:', err);
-    } finally {
-      // Eliminar los tokens del localStorage y redirigir
-      localStorage.removeItem('token');
-      localStorage.removeItem('logoutToken');
-      setTimeout(() => {
-        router.replace('/');
-      }, 100); // Pequeño retraso de 100ms
-    }
-  };
+  try {
+    const response = await fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ logoutToken }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+  } catch (err) {
+    console.error('Error al cerrar sesión:', err);
+  } finally {
+    localStorage.removeItem('token');
+    localStorage.removeItem('logoutToken');
+    router.replace('/');
+  }
+};
+
+
+  
 
   useEffect(() => {
     const checkAuth = () => {

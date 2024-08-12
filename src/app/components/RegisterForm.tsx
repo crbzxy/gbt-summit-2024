@@ -48,14 +48,17 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     if (path === "/" || path === "/#registro") {
       setShowSelect(true); // Mostrar el select si estamos en la ruta general o con hash #registro
     } else {
-      const registrationType = path.includes("/p/registro")
-        ? "presencial"
-        : path.includes("/v/registro")
-        ? "virtual"
-        : "general"; // Valor por defecto para rutas generales
+      let registrationType = "general"; // Valor por defecto para rutas generales
 
-      setShowSelect(false); // Ocultar el select para las rutas específicas
+      if (path.includes("/p/registro")) {
+        registrationType = "presencial";
+      } else if (path.includes("/v/registro")) {
+        registrationType = "virtual";
+      }
+      
+      // Luego, establece el estado
       setFormData((prevData) => ({ ...prevData, registrationType }));
+      
     }
   }, []);
 
@@ -91,21 +94,22 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+  
     if (!validateForm()) {
       setLoading(false);
       return;
     }
-
+  
     // Genera un logoutToken único
-    const logoutToken = uuidv4();
-
-    // Si el password está vacío o no es necesario, lo eliminamos de formData
-    const dataToSubmit = { ...formData, logoutToken }; // Incluye el logoutToken en los datos enviados
+    const logoutToken = uuidv4(); 
+    console.log("Logout token generado:", logoutToken);
+  
+    // Incluye el logoutToken en los datos enviados
+    const dataToSubmit = { ...formData, logoutToken }; 
     if (!isAdmin || !formData.password || formData.password.trim() === "") {
       delete dataToSubmit.password;
     }
-
+  
     try {
       await onSubmit(dataToSubmit);
     } catch (error: any) {
@@ -114,7 +118,8 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
       setLoading(false);
     }
   };
-
+  
+  
   const getSortedCountries = () => {
     if (!countries) return [];
     return countries.sort((a, b) => {

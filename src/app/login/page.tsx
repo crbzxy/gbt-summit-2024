@@ -7,11 +7,13 @@ import InputField from "../components/InputField";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Login() {
+  // Estado para manejar el correo, errores, y la carga
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Función para obtener o generar un deviceId único
   const getDeviceId = (): string => {
     let deviceId = localStorage.getItem("deviceId");
     if (!deviceId) {
@@ -21,6 +23,7 @@ export default function Login() {
     return deviceId;
   };
 
+  // Manejo del formulario de inicio de sesión
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -39,8 +42,14 @@ export default function Login() {
 
       if (response.ok) {
         const { token, logoutToken } = await response.json();
+        
+        // Guardar los tokens en localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("logoutToken", logoutToken);
+
+        // Verificar si los tokens se guardaron correctamente
+        console.log("Token guardado:", localStorage.getItem("token"));
+        console.log("LogoutToken guardado:", localStorage.getItem("logoutToken"));
 
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
@@ -61,8 +70,7 @@ export default function Login() {
       } else {
         setError("Error desconocido al conectar con el servidor");
       }
-    }
-     finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -126,3 +134,4 @@ export default function Login() {
     </div>
   );
 }
+
