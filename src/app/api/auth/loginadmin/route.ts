@@ -26,6 +26,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Acceso denegado. Solo los administradores pueden iniciar sesión.' }, { status: 403 });
     }
 
+    // Verificar que user.password no sea undefined
+    if (!user.password) {
+      return NextResponse.json({ message: 'Error en la contraseña almacenada.' }, { status: 500 });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     console.log("¿Contraseña válida?", isPasswordValid);
 
