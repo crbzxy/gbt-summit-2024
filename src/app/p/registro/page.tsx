@@ -9,6 +9,7 @@ import Navbar from '@/app/components/NavBar';
 import Home from '@/app/home/page';
 import Agenda from '@/app/components/Agenda';
 import Footer from '@/app/components/Footer';
+import PonentesPage from '@/app/components/Ponentes';
 
 export default function RegisterRemotoPage() {
   const [showModal, setShowModal] = useState(false);
@@ -61,7 +62,7 @@ export default function RegisterRemotoPage() {
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
       />
-      {/*<PonentesPage />*/}
+      <PonentesPage />
       <Agenda />
       <Footer />
 
