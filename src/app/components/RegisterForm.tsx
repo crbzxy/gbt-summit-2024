@@ -134,7 +134,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
 
   const getButtonClass = (): string => {
     const baseClass = "w-full p-3 font-semibold rounded-xl transition-colors";
-    const colorClass = mode === "edit" ? "text-blue bg-white" : "bg-[#99ECFF] text-[#1e2256]";
+    const colorClass = mode === "edit" ? "text-blue bg-white" : "bg-[rgb(153,236,255)] text-[#1e2256]";
     const hoverClass = "hover:bg-blue-700 hover:text-white";
     const disabledClass = loading ? "opacity-50 cursor-not-allowed" : "";
 
@@ -142,7 +142,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
   };
 
   const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
-  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]";
+  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]";
   const textClass = mode === "edit" ? "text-black" : "text-white";
 
   const renderCountriesDropdown = () => {
