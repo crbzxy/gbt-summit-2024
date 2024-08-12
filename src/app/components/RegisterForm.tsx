@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect } from "react";
 import InputField from "../components/InputField";
 import useCountries from "../hooks/useCountries";
 
@@ -15,7 +15,6 @@ export type FormState = {
 };
 
 interface RegistrationFormProps {
-  registrationType: string;
   mode: "register" | "edit";
   initialData?: Partial<FormState>;
   onSubmit: (data: FormState) => Promise<void>;
@@ -23,12 +22,12 @@ interface RegistrationFormProps {
 }
 
 const RegisterForm: React.FC<RegistrationFormProps> = ({
-  registrationType,
   mode,
   initialData = {},
   onSubmit,
   isAdmin = false,
 }) => {
+  const [showSelect, setShowSelect] = useState(false);
   const [formData, setFormData] = useState<FormState>({
     name: initialData.name ?? "",
     email: initialData.email ?? "",
@@ -36,37 +35,57 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     company: initialData.company ?? "",
     position: initialData.position ?? "",
     country: initialData.country ?? "",
-    registrationType,
-    password: "",  // Inicializar el campo de contraseña con una cadena vacía
-    role: isAdmin ? "admin" : "user",  // Establecer el rol basado en isAdmin
+    registrationType: "virtual", // Valor por defecto
+    password: "",
+    role: isAdmin ? "admin" : "user",
   });
+
+  useEffect(() => {
+    const path = window.location.pathname + window.location.hash;
+
+    if (path === "/" || path === "/#registro") {
+      setShowSelect(true); // Mostrar el select si estamos en la ruta general o con hash #registro
+    } else {
+      const registrationType = path.includes("/p/registro")
+        ? "presencial"
+        : path.includes("/v/registro")
+        ? "virtual"
+        : "general"; // Valor por defecto para rutas generales
+
+      setShowSelect(false); // Ocultar el select para las rutas específicas
+      setFormData((prevData) => ({ ...prevData, registrationType }));
+    }
+  }, []);
 
   const { countries, loading: countriesLoading, error: countriesError } = useCountries();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value ?? "" }));  // Asegurar que el valor nunca sea undefined
-  };
-
-  const validateForm = () => {
+  const validateForm = (): boolean => {
     const { name, email, phone, company, position, country, password } = formData;
+
     if (!name || !email || !phone || !company || !position || !country) {
       setError("Por favor, completa todos los campos.");
       return false;
     }
+
     if (isAdmin && !password) {
       setError("La contraseña es requerida para los administradores.");
       return false;
     }
+
     return true;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value ?? "" }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -76,8 +95,14 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
       return;
     }
 
+    // Si el password está vacío o no es necesario, lo eliminamos de formData
+    const dataToSubmit = { ...formData };
+    if (!isAdmin || !formData.password || formData.password.trim() === "") {
+      delete dataToSubmit.password;
+    }
+
     try {
-      await onSubmit(formData);
+      await onSubmit(dataToSubmit);
     } catch (error: any) {
       setError(error.message || "Error desconocido.");
     } finally {
@@ -85,27 +110,60 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     }
   };
 
-  const sortedCountries = countries
-    ? countries.sort((a, b) => {
-        if (a.code === "MX") return -1;
-        if (b.code === "MX") return 1;
-        return a.name.localeCompare(b.name);
-      })
-    : [];
+  const getSortedCountries = () => {
+    if (!countries) return [];
+    return countries.sort((a, b) => {
+      if (a.code === "MX") return -1;
+      if (b.code === "MX") return 1;
+      return a.name.localeCompare(b.name);
+    });
+  };
+
+  const sortedCountries = getSortedCountries();
+
+  const getButtonClass = (): string => {
+    const baseClass = "w-full p-3 font-semibold rounded-xl transition-colors";
+    const colorClass = mode === "edit" ? "text-blue bg-white" : "bg-[#99ECFF] text-[#1e2256]";
+    const hoverClass = "hover:bg-blue-700 hover:text-white";
+    const disabledClass = loading ? "opacity-50 cursor-not-allowed" : "";
+
+    return `${baseClass} ${colorClass} ${hoverClass} ${disabledClass}`;
+  };
 
   const buttonText = mode === "register" ? "Registrar" : "Guardar Cambios";
-  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]";
+  const backgroundClass = mode === "edit" ? "bg-white" : "bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]";
   const textClass = mode === "edit" ? "text-black" : "text-white";
+
+  const renderCountriesDropdown = () => {
+    if (countriesLoading) return <p>Cargando países...</p>;
+    if (countriesError) return <p>Error al cargar países: {countriesError}</p>;
+
+    return (
+      <select
+        name="country"
+        value={formData.country ?? ""}
+        onChange={handleInputChange}
+        className="w-full p-3 bg-white border border-gray-300 rounded-lg"
+      >
+        <option value="">Seleccione un país</option>
+        {sortedCountries.map((country) => (
+          <option key={country.code} value={country.code}>
+            {country.name}
+          </option>
+        ))}
+      </select>
+    );
+  };
 
   return (
     <div id="registro" className={`min-h-screen flex items-center justify-center ${backgroundClass}`}>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row items-center justify-center">
         {mode !== "edit" && (
           <div className="h-auto">
             <img
               src="/tarjeta.png"
               alt="Tarjeta"
-              className="w-full h-auto rounded-lg"
+              className="w-5/6 h-4/6 rounded-lg"
             />
           </div>
         )}
@@ -123,7 +181,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Nombre"
               name="name"
-              value={formData.name ?? ""}  // Usar valor por defecto si es undefined
+              value={formData.name ?? ""}
               onChange={handleInputChange}
               mode={mode}
             />
@@ -131,7 +189,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="email"
               placeholder="Correo"
               name="email"
-              value={formData.email ?? ""}  // Usar valor por defecto si es undefined
+              value={formData.email ?? ""}
               onChange={handleInputChange}
               mode={mode}
             />
@@ -139,7 +197,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Teléfono"
               name="phone"
-              value={formData.phone ?? ""}  // Usar valor por defecto si es undefined
+              value={formData.phone ?? ""}
               onChange={handleInputChange}
               mode={mode}
             />
@@ -147,7 +205,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Empresa"
               name="company"
-              value={formData.company ?? ""}  // Usar valor por defecto si es undefined
+              value={formData.company ?? ""}
               onChange={handleInputChange}
               mode={mode}
             />
@@ -155,44 +213,38 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               type="text"
               placeholder="Puesto"
               name="position"
-              value={formData.position ?? ""}  // Usar valor por defecto si es undefined
+              value={formData.position ?? ""}
               onChange={handleInputChange}
               mode={mode}
             />
-            {countriesLoading ? (
-              <p>Cargando países...</p>
-            ) : countriesError ? (
-              <p>Error al cargar países: {countriesError}</p>
-            ) : (
+
+            {renderCountriesDropdown()}
+
+            {showSelect && (
               <select
-                name="country"
-                value={formData.country ?? ""}  // Usar valor por defecto si es undefined
+                name="registrationType"
+                value={formData.registrationType}
                 onChange={handleInputChange}
                 className="w-full p-3 bg-white border border-gray-300 rounded-lg"
               >
-                <option value="">Seleccione un país</option>
-                {sortedCountries.map((country) => (
-                  <option key={country.code} value={country.code}>
-                    {country.name}
-                  </option>
-                ))}
+                <option value="virtual">Virtual</option>
+                <option value="presencial">Presencial</option>
               </select>
             )}
+
             {isAdmin && (
               <InputField
                 type="password"
                 placeholder="Contraseña"
                 name="password"
-                value={formData.password ?? ""}  // Usar valor por defecto si es undefined
+                value={formData.password ?? ""}
                 onChange={handleInputChange}
                 mode={mode}
               />
             )}
             <button
               type="submit"
-              className={`w-full p-3 bg-[rgb(153,236,255)] ${mode === "edit" ? "text-blue" : "bg-[rgb(153,236,255)] text-[#1e2256]"
-                } font-semibold rounded-xl hover:bg-blue-700 transition-colors hover:text-white ${loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={getButtonClass()}
               disabled={loading}
             >
               {loading ? "Guardando..." : buttonText}

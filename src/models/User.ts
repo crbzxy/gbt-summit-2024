@@ -1,34 +1,69 @@
-import mongoose, { CallbackError } from 'mongoose';
+import mongoose, { CallbackError, Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const userSchema = new mongoose.Schema({
+interface IUser extends Document {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  position?: string;
+  country: string;
+  role: string;
+  registrationType: string;
+  sessionToken?: string;
+  sessionExpiresAt?: Date;
+  lastActiveAt?: Date;
+  deviceId?: string;
+  password?: string;
+}
+
+const userSchema = new mongoose.Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String },
   company: { type: String },
   position: { type: String },
-  country: { type: String, required: true }, // Campo para el país
+  country: { type: String, required: true },
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
   registrationType: { type: String, enum: ['general', 'presencial', 'virtual'], default: 'general' },
   sessionToken: { type: String },
-  password: { type: String, required: true }, // Campo para la contraseña
+  sessionExpiresAt: { type: Date },  // Fecha de expiración de la sesión
+  lastActiveAt: { type: Date },  // Fecha de última actividad
+  deviceId: { type: String },  // ID del dispositivo
+  password: { type: String },  // Campo para la contraseña
 });
 
 // Middleware para encriptar la contraseña antes de guardar
 userSchema.pre('save', async function (next: (err?: CallbackError) => void) {
-  if (!this.isModified('password')) {
+  const user = this as IUser;
+
+  // Si no hay contraseña o no se ha modificado, continuar
+  if (!user.password || !user.isModified('password')) {
     return next();
   }
   
   try {
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    user.password = await bcrypt.hash(user.password, salt);
     next();
   } catch (err) {
-    next(err as CallbackError); // Asegura que el error sea del tipo correcto
+    next(err as CallbackError);
   }
 });
 
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+// Método para verificar la contraseña
+userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
+  const user = this as IUser;
+  return bcrypt.compare(password, user.password!);
+};
+
+// Método para verificar la validez del token de sesión
+userSchema.methods.isSessionValid = function (): boolean {
+  const user = this as IUser;
+  if (!user.sessionExpiresAt) return false;
+  return new Date() < user.sessionExpiresAt;
+};
+
+const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;

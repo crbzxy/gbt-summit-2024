@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       company,
       position,
       country, // Incluimos el país
-      registrationType: registrationType || 'website', // Establecer tipo de registro predeterminado
+      registrationType: registrationType || 'general', // Establecer tipo de registro predeterminado
     });
 
     // Guardar el usuario en la base de datos

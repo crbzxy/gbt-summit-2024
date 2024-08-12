@@ -40,14 +40,13 @@ export default function RegisterRemotoPage() {
   const handleCloseModal = () => {
     setShowModal(false);
     // Redirigir al usuario a la página de inicio de sesión
-    router.push('/login');
+    router.push('/');
   };
 
   return (
     <div id="registro">
       <RegisterForm
       
-        registrationType="general"
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
       />

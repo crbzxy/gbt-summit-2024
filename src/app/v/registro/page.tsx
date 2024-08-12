@@ -1,7 +1,7 @@
 // remoto/register/page.tsx
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import RegisterForm, { FormState } from "../../components/RegisterForm";
 import SuccessModal from '../../components/SuccessModal';
 import { useRouter } from 'next/navigation'; // Importa el hook de navegación
@@ -9,7 +9,6 @@ import Navbar from '@/app/components/NavBar';
 import Home from '@/app/home/page';
 import Agenda from '@/app/components/Agenda';
 import Footer from '@/app/components/Footer';
-import Loader from '@/app/components/Loader';
 
 export default function RegisterRemotoPage() {
   const [showModal, setShowModal] = useState(false);
@@ -48,7 +47,7 @@ export default function RegisterRemotoPage() {
   const handleCloseModal = () => {
     setShowModal(false);
     // Redirigir al usuario a la página de inicio de sesión
-    router.push('/login');
+    router.push('/');
   };
 
   return (
@@ -58,7 +57,6 @@ export default function RegisterRemotoPage() {
       <Home />
       {/* <Register /> */}
       <RegisterForm
-        registrationType="virtual"
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
       />

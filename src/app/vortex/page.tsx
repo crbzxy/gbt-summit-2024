@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
 import InputField from "../components/InputField";
@@ -12,48 +12,57 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
- // En el frontend (asegúrate de que el password sea texto claro)
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError(null);
-  setLoading(true);
-
-  try {
-    const response = await fetch("/api/auth/loginadmin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),  // Aquí password debe ser el texto claro
-    });
-
-    if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem("token", token);
-
+  useEffect(() => {
+    // Verificar si el usuario ya está autenticado como admin
+    const token = localStorage.getItem("token");
+    if (token) {
       const { role } = JSON.parse(atob(token.split(".")[1]));
-
       if (role === "admin") {
         router.push("/admin");
-      } else {
-        router.push("/live");
       }
-    } else {
-      const errorData = await response.json();
-      setError(errorData.message || "Error de autenticación");
     }
-  } catch (err) {
-    if (err instanceof Error) {
-      setError("Error al conectar con el servidor: " + err.message);
-    } else {
-      setError("Error al conectar con el servidor");
-    }
-    console.error("Error al conectar con el servidor", err);
-  } finally {
-    setLoading(false);
-  }
-};
+  }, [router]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/loginadmin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),  // Aquí password debe ser el texto claro
+      });
+
+      if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+
+        const { role } = JSON.parse(atob(token.split(".")[1]));
+
+        if (role === "admin") {
+          router.push("/admin");
+        } else {
+          router.push("/live");
+        }
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Error de autenticación");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError("Error al conectar con el servidor: " + err.message);
+      } else {
+        setError("Error al conectar con el servidor");
+      }
+      console.error("Error al conectar con el servidor", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleRegisterRedirect = () => {
     router.push("/admin"); // Redirigir a la página de registro de administradores
@@ -64,7 +73,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
       <img
         src="/gbtwhite.png"
         alt="American Express Logo"
@@ -76,7 +85,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <h1 className="text-3xl font-bold mb-6 text-blue-600 text-center">
           Iniciar Sesión
         </h1>
-       
+
         {error && (
           <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded-lg border border-red-200">
             {error}

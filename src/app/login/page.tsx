@@ -32,7 +32,8 @@ export default function Login() {
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
         if (role === "admin") {
-          router.push("/admin");
+          setError("Favor de verificar su correo.");
+          localStorage.removeItem("token"); // Remover el token
         } else {
           router.push("/live");
         }
@@ -63,7 +64,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#66A9E2] via-[#006FCF] to-[#66A9E2]">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
       <img
         src="/gbtwhite.png"
         alt="American Express Logo"
