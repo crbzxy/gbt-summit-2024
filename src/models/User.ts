@@ -14,6 +14,7 @@ interface IUser extends Document {
   sessionExpiresAt?: Date;
   lastActiveAt?: Date;
   deviceId?: string;
+  logoutToken?: string; // Token para controlar el logout
   password?: string;
 }
 
@@ -30,6 +31,7 @@ const userSchema = new mongoose.Schema<IUser>({
   sessionExpiresAt: { type: Date },  // Fecha de expiración de la sesión
   lastActiveAt: { type: Date },  // Fecha de última actividad
   deviceId: { type: String },  // ID del dispositivo
+  logoutToken: { type: String }, // Token de salida para validar el cierre de sesión
   password: { type: String },  // Campo para la contraseña
 });
 

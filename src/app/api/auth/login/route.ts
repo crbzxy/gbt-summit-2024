@@ -12,8 +12,7 @@ export async function POST(request: Request) {
   if (!email || !deviceId) {
     return NextResponse.json(
       {
-        message:
-          "El correo electrónico y el ID del dispositivo son requeridos.",
+        message: "El correo electrónico y el ID del dispositivo son requeridos.",
       },
       { status: 400 }
     );
@@ -30,11 +29,8 @@ export async function POST(request: Request) {
     }
 
     // Verificar si el dispositivo ya está registrado para este usuario
-    if (user.deviceId && user.deviceId !== deviceId) {
+    if (user.deviceId && user.deviceId !== deviceId && user.sessionToken) {
       // Invalida la sesión actual si se intenta iniciar desde un dispositivo diferente
-      user.sessionToken = undefined;
-      user.deviceId = undefined;
-      await user.save();
       return NextResponse.json(
         {
           message:
@@ -70,6 +66,7 @@ export async function POST(request: Request) {
     user.sessionExpiresAt = sessionExpiresAt;
     user.deviceId = deviceId;
     user.lastActiveAt = now;
+    user.logoutToken = undefined; // Se permite un nuevo login eliminando el logoutToken
     await user.save();
 
     return NextResponse.json(

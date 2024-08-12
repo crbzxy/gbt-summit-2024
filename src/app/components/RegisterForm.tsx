@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputField from "../components/InputField";
 import useCountries from "../hooks/useCountries";
+import { v4 as uuidv4 } from "uuid"; // Importa uuid para generar tokens únicos
 
 export type FormState = {
   name: string;
@@ -12,6 +13,7 @@ export type FormState = {
   registrationType: string;
   password?: string;
   role?: string;
+  logoutToken?: string; // Agrega el campo logoutToken
 };
 
 interface RegistrationFormProps {
@@ -95,8 +97,11 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
       return;
     }
 
+    // Genera un logoutToken único
+    const logoutToken = uuidv4();
+
     // Si el password está vacío o no es necesario, lo eliminamos de formData
-    const dataToSubmit = { ...formData };
+    const dataToSubmit = { ...formData, logoutToken }; // Incluye el logoutToken en los datos enviados
     if (!isAdmin || !formData.password || formData.password.trim() === "") {
       delete dataToSubmit.password;
     }

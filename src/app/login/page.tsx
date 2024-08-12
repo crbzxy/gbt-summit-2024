@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
 import InputField from "../components/InputField";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,10 +12,21 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const getDeviceId = (): string => {
+    let deviceId = localStorage.getItem("deviceId");
+    if (!deviceId) {
+      deviceId = uuidv4();
+      localStorage.setItem("deviceId", deviceId);
+    }
+    return deviceId;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    const deviceId = getDeviceId();
 
     try {
       const response = await fetch("/api/auth/login", {
@@ -22,18 +34,20 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, deviceId }),
       });
 
       if (response.ok) {
-        const { token } = await response.json();
+        const { token, logoutToken } = await response.json();
         localStorage.setItem("token", token);
+        localStorage.setItem("logoutToken", logoutToken);
 
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
         if (role === "admin") {
           setError("Favor de verificar su correo.");
-          localStorage.removeItem("token"); // Remover el token
+          localStorage.removeItem("token");
+          localStorage.removeItem("logoutToken");
         } else {
           router.push("/live");
         }
@@ -45,22 +59,12 @@ export default function Login() {
       if (err instanceof Error) {
         setError("Error al conectar con el servidor: " + err.message);
       } else {
-        setError("Error al conectar con el servidor");
+        setError("Error desconocido al conectar con el servidor");
       }
-      console.error("Error al conectar con el servidor", err);
-    } finally {
+    }
+     finally {
       setLoading(false);
     }
-  };
-
-  // Redirige al usuario a la página de registro
-  const handleRegisterRedirect = () => {
-    router.push("/registro");
-  };
-
-  // Regresa a la pantalla anterior
-  const handleBack = () => {
-    router.back();
   };
 
   return (
@@ -103,17 +107,16 @@ export default function Login() {
           <p className="text-sm text-gray-600">
             ¿No tienes una cuenta?{" "}
             <button
-              onClick={handleRegisterRedirect}
+              onClick={() => router.push("/registro")}
               className="text-blue-600 hover:underline"
             >
               Regístrate aquí
             </button>
           </p>
         </div>
-        {/* Botón para regresar */}
         <div className="mt-4 text-center absolute left-8 top-7">
           <button
-            onClick={handleBack}
+            onClick={() => router.back()}
             className="text-sm text-white hover:underline"
           >
             &larr; Volver

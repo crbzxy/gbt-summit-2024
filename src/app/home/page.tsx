@@ -34,12 +34,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex  items-center min-h-screen bg-white text-gray-900 justify-center max-w-7xl mx-auto">
-      <div className="flex flex-col items-center w-full px-4">
+    <main className="flex flex-col lg:flex-row items-center min-h-screen bg-white text-gray-900 justify-center max-w-7xl mx-auto px-4">
+
+      <div className="flex flex-col items-center w-full">
         {/* Contenedor principal */}
-        <div className="flex flex-col lg:flex-row justify-center  items-center mt-20  lg:mt-16 lg:space-x-8">
+        <div className=" flex flex-col lg:flex-row justify-center items-center mt-10 lg:mt-16 lg:space-x-8">
           {/* Imagen del ticket */}
-          <div className="flex flex-col items-center mb-3 lg:mb-0">
+          <div className="flex flex-col items-center mb-4 lg:mb-0 mt-9">
             <Image
               src="/laclogo.png"
               alt="Event Ticket"
@@ -51,8 +52,8 @@ export default function Home() {
         </div>
 
         {/* Descripción */}
-        <div className="w-full max-w-5xl mb-2 text-left px-4">
-          <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
+        <div className="w-full max-w-5xl mb-6 text-left">
+          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
             Como cada año, American Express Global Business Travel (Amex GBT)
             celebra el “LAC Business Travel Summit” bajo el concepto de
             “Impulsando conexiones de valor” en la edición de este año. Un evento
@@ -60,43 +61,35 @@ export default function Home() {
             GBT y nuestros socios de negocios, compartiendo experiencias, buenas
             prácticas, casos de éxito y estrategias de gestión para travel managers.
           </p>
-          <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
             En la conferencia magistral, nos honrará con su presencia Gloria
             Guevara Manzo, expresidenta del Consejo Mundial de Viajes y Turismo
             (WTTC), y actual asesora en jefe del ministro de Turismo de Arabia
             Saudita, Mohamed Al Khateeb. Ella es miembro del Consejo de Amex
             GBT y nos platicará sobre el crecimiento de los viajes de negocio.
           </p>
-          <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
             Esperamos que este evento le ayude a conocer cómo Amex GBT busca
             constantemente las conexiones de valor entre sus socios estratégicos y
             logre ampliar su visión sobre los viajes corporativos.
           </p>
         </div>
-
-
       </div>
-      <div className="flex flex-col items-center w-full px-4">
-        {/* Contenedor principal */}
 
-
-
-
+      <div className="flex flex-col items-center w-full">
         {/* Patrocinadores */}
-        <h2 className="text-3xl font-bold text-blue-900 text-center mb-16">
+        <h2 className="text-2xl md:text-3xl font-bold text-blue-900 text-center mb-8 md:mb-16">
           Nuestros patrocinadores:
         </h2>
-        <div className="flex flex-wrap justify-center items-center gap-4">
+        <div className="flex flex-wrap justify-center items-center gap-4 mb-12">
           <div className="flex justify-center items-center">
-            <Image src="/all_logos.svg" alt="Aeromexico" width={420} height={80} />
+            <Image src="/all_logos.svg" alt="Patrocinadores" width={420} height={80} />
           </div>
-       
-
         </div>
 
         {/* Temporizador */}
-        <div className="flex flex-col items-center mb-6 lg:mb-0 mt-8">
-          <h2 className="text-xl lg:text-2xl font-extrabold text-blue-900 mb-4 mt-10 text-center">
+        <div className="flex flex-col items-center mb-12 lg:mb-0">
+          <h2 className="text-xl lg:text-2xl font-extrabold text-blue-900 mb-4 text-center">
             Faltan
           </h2>
           <div className="flex flex-wrap justify-center gap-2 mb-8 text-center">
