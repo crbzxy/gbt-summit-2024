@@ -192,10 +192,10 @@ export default function Admin() {
               <div className="p-6">
                 <h2 className="text-2xl font-bold mb-4 text-center">Editar Usuario</h2>
                 <RegistrationForm
-                  registrationType={selectedUser.registrationType}
                   mode="edit"
                   initialData={selectedUser}
                   onSubmit={handleUpdateUser}
+                  registrationType={selectedUser.registrationType} // Asegúrate de pasar registrationType
                 />
               </div>
               <div className="flex justify-end p-4">

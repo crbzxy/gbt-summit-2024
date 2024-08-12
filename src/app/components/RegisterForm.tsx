@@ -112,7 +112,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="email"
@@ -120,7 +120,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="text"
@@ -128,7 +128,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="text"
@@ -136,7 +136,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="company"
               value={formData.company}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             <InputField
               type="text"
@@ -144,7 +144,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
               name="position"
               value={formData.position}
               onChange={handleInputChange}
-              mode={mode} // Pasar mode aquí
+              mode={mode}
             />
             {countriesLoading ? (
               <p>Cargando países...</p>
