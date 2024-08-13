@@ -35,9 +35,6 @@ body {
   }
 }
 
-
-
-
 .loader {
   border-top-color: #3490dc;
   animation: spinner 1.5s linear infinite;
@@ -50,4 +47,20 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+@keyframes bgGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-bgGradient {
+  background-size: 150% 150%;
+  animation: bgGradient 30s ease-in-out infinite;
 }
