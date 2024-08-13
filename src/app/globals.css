@@ -52,8 +52,14 @@ body {
   0% {
     background-position: 0% 50%;
   }
+  25% {
+    background-position: 25% 75%;
+  }
   50% {
     background-position: 50% 50%;
+  }
+  75% {
+    background-position: 75% 25%;
   }
   100% {
     background-position: 0% 50%;
@@ -62,5 +68,11 @@ body {
 
 .animate-bgGradient {
   background-size: 150% 150%;
-  animation: bgGradient 30s ease-in-out infinite;
+  animation: bgGradient 1s ease-in-out infinite;
+}
+
+
+.animate-bgGradient {
+  background-size: 150% 150%;
+  animation: bgGradient 20s ease-in-out infinite;
 }
