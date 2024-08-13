@@ -37,7 +37,7 @@ const Agenda: React.FC = () => {
 
     return (
         <div className="flex flex-col align-middle justify-center text-center pt-6 pb-12 bg-white shadow-md" id="agenda">
-            <h2 className="text-2xl font-bold text-blue-700 mb-4">Agenda</h2>
+            <h2 className="text-2xl font-bold text-[#006FCF] mb-4">Agenda</h2>
             <table className="w-full text-center border-collapse max-w-5xl m-auto">
                 <thead >
                     <tr className=" text-white mb-5">

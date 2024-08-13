@@ -49,7 +49,7 @@ const PonentesPage = () => {
                 feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore
                 te feugait nulla facilisi.
             `,
-            image: '/path/to/image3.png',
+            image: '/marco.png',
         },
         {
             id: '4',
@@ -63,7 +63,7 @@ const PonentesPage = () => {
                 feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore
                 te feugait nulla facilisi.
             `,
-            image: '/path/to/image4.png',
+            image: '/marco.png',
         },
         {
             id: '5',

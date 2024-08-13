@@ -132,7 +132,7 @@ export default function Admin() {
     <div className='min-h-screen bg-gray-100 p-6'>
       <div className='max-w-7xl mx-auto'>
         <div className='flex justify-between items-center mb-6'>
-          <h1 className='text-4xl font-extrabold text-blue-700'>
+          <h1 className='text-4xl font-extrabold text-[#006FCF]'>
             Panel de Administración
           </h1>
           <div className='space-x-4'>

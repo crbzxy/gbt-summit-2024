@@ -78,7 +78,7 @@ export default function Home() {
 
       <div className="flex flex-col items-center w-full">
         {/* Patrocinadores */}
-        <h2 className="text-2xl md:text-3xl font-bold text-blue-900 text-center mb-8 md:mb-16">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#006FCF] text-center mb-8 md:mb-16">
           Nuestros patrocinadores:
         </h2>
         <div className="flex flex-wrap justify-center items-center gap-4 mb-12">
@@ -89,7 +89,7 @@ export default function Home() {
 
         {/* Temporizador */}
         <div className="flex flex-col items-center mb-12 lg:mb-0">
-          <h2 className="text-xl lg:text-2xl font-extrabold text-blue-900 mb-4 text-center">
+          <h2 className="text-xl lg:text-2xl font-extrabold text-[#006FCF] mb-4 text-center">
             Faltan
           </h2>
           <div className="flex flex-wrap justify-center gap-2 mb-8 text-center">
