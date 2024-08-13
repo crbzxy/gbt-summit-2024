@@ -41,11 +41,11 @@ const Agenda: React.FC = () => {
             <table className="w-full text-center border-collapse max-w-5xl m-auto">
                 <thead >
                     <tr className=" text-white mb-5">
-                        <th className="p-4 rounded-md bg-blue-600" style={{ width: '15%' }}>Horario</th>
+                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '15%' }}>Horario</th>
                         <th className="p-4 rounded-full" style={{ width: '2.5%' }}></th>
-                        <th className="p-4 rounded-md bg-blue-600" style={{ width: '40%' }}>Actividad</th>
+                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '40%' }}>Actividad</th>
                         <th className="p-4 rounded-full" style={{ width: '2.5%' }}></th>
-                        <th className="p-4 rounded-md bg-blue-600" style={{ width: '35%' }}>Ponentes</th>
+                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '35%' }}>Ponentes</th>
                     </tr>
                 </thead>
                 <tbody>

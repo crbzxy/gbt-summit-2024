@@ -53,7 +53,7 @@ export default function Home() {
 
         {/* Descripción */}
         <div className="w-full max-w-5xl mb-6 text-left">
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-[#006FCF] leading-relaxed mb-4">
             Como cada año, American Express Global Business Travel (Amex GBT)
             celebra el “LAC Business Travel Summit” bajo el concepto de
             “Impulsando conexiones de valor” en la edición de este año. Un evento
@@ -61,14 +61,14 @@ export default function Home() {
             GBT y nuestros socios de negocios, compartiendo experiencias, buenas
             prácticas, casos de éxito y estrategias de gestión para travel managers.
           </p>
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-[#006FCF] leading-relaxed mb-4">
             En la conferencia magistral, nos honrará con su presencia Gloria
             Guevara Manzo, expresidenta del Consejo Mundial de Viajes y Turismo
             (WTTC), y actual asesora en jefe del ministro de Turismo de Arabia
             Saudita, Mohamed Al Khateeb. Ella es miembro del Consejo de Amex
             GBT y nos platicará sobre el crecimiento de los viajes de negocio.
           </p>
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-[#006FCF] leading-relaxed mb-4">
             Esperamos que este evento le ayude a conocer cómo Amex GBT busca
             constantemente las conexiones de valor entre sus socios estratégicos y
             logre ampliar su visión sobre los viajes corporativos.
@@ -94,28 +94,28 @@ export default function Home() {
           </h2>
           <div className="flex flex-wrap justify-center gap-2 mb-8 text-center">
             <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-blue-900 rounded-full w-14 h-14 flex items-center justify-center">
+              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
                 {timeLeft.days}
               </span>
-              <span className="text-sm font-semibold text-gray-700">días</span>
+              <span className="text-sm font-semibold text-[#006FCF]">días</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-blue-900 rounded-full w-14 h-14 flex items-center justify-center">
+              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
                 {timeLeft.hours}
               </span>
-              <span className="text-sm font-semibold text-gray-700">horas</span>
+              <span className="text-sm font-semibold text-[#006FCF]">horas</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-blue-900 rounded-full w-14 h-14 flex items-center justify-center">
+              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
                 {timeLeft.minutes}
               </span>
-              <span className="text-sm font-semibold text-gray-700">mins</span>
+              <span className="text-sm font-semibold text-[#006FCF]">mins</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-blue-900 rounded-full w-14 h-14 flex items-center justify-center">
+              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
                 {timeLeft.seconds}
               </span>
-              <span className="text-sm font-semibold text-gray-700">segs</span>
+              <span className="text-sm font-semibold text-[#006FCF]">segs</span>
             </div>
           </div>
         </div>

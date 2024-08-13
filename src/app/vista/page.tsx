@@ -65,7 +65,7 @@ export default function Vista() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-indigo-700 via-blue-950 to-indigo-700">
       <img
-        src="/gbtwhite.png"
+        src="/gbtwhite.svg"
         alt="American Express Logo"
         width={120}
         height={40}
