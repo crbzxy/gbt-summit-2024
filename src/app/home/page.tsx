@@ -53,7 +53,7 @@ export default function Home() {
 
         {/* Descripción */}
         <div className="w-full max-w-5xl mb-6 text-left">
-          <p className="text-sm md:text-base text-[#006FCF] leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-[#00175A]] leading-relaxed mb-4">
             Como cada año, American Express Global Business Travel (Amex GBT)
             celebra el “LAC Business Travel Summit” bajo el concepto de
             “Impulsando conexiones de valor” en la edición de este año. Un evento
@@ -61,14 +61,14 @@ export default function Home() {
             GBT y nuestros socios de negocios, compartiendo experiencias, buenas
             prácticas, casos de éxito y estrategias de gestión para travel managers.
           </p>
-          <p className="text-sm md:text-base text-[#006FCF] leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-[#00175A] leading-relaxed mb-4">
             En la conferencia magistral, nos honrará con su presencia Gloria
             Guevara Manzo, expresidenta del Consejo Mundial de Viajes y Turismo
             (WTTC), y actual asesora en jefe del ministro de Turismo de Arabia
             Saudita, Mohamed Al Khateeb. Ella es miembro del Consejo de Amex
             GBT y nos platicará sobre el crecimiento de los viajes de negocio.
           </p>
-          <p className="text-sm md:text-base text-[#006FCF] leading-relaxed mb-4">
+          <p className="text-sm md:text-base text-[#00175A] leading-relaxed mb-4">
             Esperamos que este evento le ayude a conocer cómo Amex GBT busca
             constantemente las conexiones de valor entre sus socios estratégicos y
             logre ampliar su visión sobre los viajes corporativos.
