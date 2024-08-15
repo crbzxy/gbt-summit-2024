@@ -17,14 +17,26 @@ export default function Navbar() {
         setIsOpen(false);
     };
 
+    // Función para hacer scroll al inicio de la página
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Desplazamiento suave
+        });
+    };
+
     return (
         <header className="bg-white shadow-md fixed w-full z-50">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-evenly">
                     {/* Logo */}
-                    <div className="flex items-center">
+                    <button
+                        className="flex items-center cursor-pointer bg-transparent border-none p-0"
+                        onClick={scrollToTop}
+                        aria-label="Scroll to top" // Descripción accesible para lectores de pantalla
+                    >
                         <Image src="/logo.svg" alt="American Express Logo" width={120} height={40} />
-                    </div>
+                    </button>
 
                     {/* Botón del Menú para Móviles */}
                     <div className="absolute inset-y-0 right-0 flex items-center lg:hidden">
