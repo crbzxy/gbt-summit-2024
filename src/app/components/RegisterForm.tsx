@@ -56,10 +56,10 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
       } else if (path.includes("/v/registro")) {
         registrationType = "virtual";
       }
-      
+
       // Luego, establece el estado
       setFormData((prevData) => ({ ...prevData, registrationType }));
-      
+
     }
   }, []);
 
@@ -95,22 +95,22 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     e.preventDefault();
     setLoading(true);
     setError(null);
-  
+
     if (!validateForm()) {
       setLoading(false);
       return;
     }
-  
+
     // Genera un logoutToken único
-    const logoutToken = uuidv4(); 
+    const logoutToken = uuidv4();
     console.log("Logout token generado:", logoutToken);
-  
+
     // Incluye el logoutToken en los datos enviados
-    const dataToSubmit = { ...formData, logoutToken }; 
+    const dataToSubmit = { ...formData, logoutToken };
     if (!isAdmin || !formData.password || formData.password.trim() === "") {
       delete dataToSubmit.password;
     }
-  
+
     try {
       await onSubmit(dataToSubmit);
     } catch (error: any) {
@@ -119,8 +119,8 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
       setLoading(false);
     }
   };
-  
-  
+
+
   const getSortedCountries = () => {
     if (!countries) return [];
     return countries.sort((a, b) => {
@@ -174,8 +174,9 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
             <img
               src="/tarjeta.svg"
               alt="Tarjeta"
-              className="w-5/6 h-4/6 rounded-lg"
+              className="w-[500px] h-4/6 rounded-lg min-w-[320px]"
             />
+
           </div>
         )}
         <div className="p-8">
