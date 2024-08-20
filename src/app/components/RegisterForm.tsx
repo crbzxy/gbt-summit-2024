@@ -172,7 +172,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
         {mode !== "edit" && (
           <div className="h-auto">
             <img
-              src="/tarjeta.png"
+              src="/tarjeta.svg"
               alt="Tarjeta"
               className="w-5/6 h-4/6 rounded-lg"
             />

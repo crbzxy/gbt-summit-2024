@@ -29,11 +29,9 @@ const PonentesPage = () => {
             title: 'Travel Manager para Casa Cuervo',
             category: 'Panel “Mujeres exitosas en la industria de viajes”',
             description: `
-                Gerente Servicios Generales en José Cuervo.
-                Lic Administración de Instituciones por la ESDAI, UP.
-                Chef por The Culinary Insitute of America.
-                Sommelier por la Universad del Tepeyac.
-                Más de 30 años trabajando en la industria de la hospitalidad, 16 años en José Cuervo.
+                Licenciada en Administración de Instituciones por la ESDAI, UP y Chef por The Culinary Insitute of America y Sommelier por la Universad del Tepeyac.
+                Cuenta con una experiencia de más de 30 años trabajando en la industria de la hospitalidad y 16 años en José Cuervo,
+                actualmente como Gerente de Servicios Generales.
             `,
             image: '/FabiolaUrtiaga.png',
         },
@@ -70,8 +68,12 @@ const PonentesPage = () => {
             title: 'Miembro del Consejo de Amex GBT',
             category: 'Conferencia magistral',
             description: `
-                Expresidenta del Consejo Mundial de Viajes y Turismo (WTTC), y actual asesora en jefe del ministro de Turismo de Arabia Saudita,
-                Mohamed Al Khateeb.
+                Licenciada en Informática por la Universidad Anáhuac, con un MBA por Kellogg School of Business de Northwestern University.
+                Dirigió el Consejo Mundial de Viajes y Turismo (WTTC) desde 2017 como Presidenta y CEO. 
+                Se incorporó al Ministerio de Turismo de Arabia Saudí como Asesora Especial Principal del Ministro en 2021 para apoyar la impresionante transformación en el marco de Visión 2030 y el desarrollo de Viajes y Turismo.
+                Durante su estancia en el WTTC, creó iniciativas clave centradas en el turismo sostenible y los viajes sin interrupciones.
+                Fue reconocida como una de las mujeres más influyentes de México por CNN, Forbes y Expansión.
+                Actualmente forma parte del consejo de AMEX GBT (GBTG) y de la Autoridad Saudí de Turismo.
             `,
             image: '/GloriaGuevara.png',
         },
