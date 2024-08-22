@@ -21,7 +21,7 @@ interface RegistrationFormProps {
   initialData?: Partial<FormState>;
   onSubmit: (data: FormState) => Promise<void>;
   isAdmin?: boolean;
-  registrationType?: string;
+  // registrationType?: string;
 }
 
 const RegisterForm: React.FC<RegistrationFormProps> = ({
@@ -38,7 +38,7 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     company: initialData.company ?? "",
     position: initialData.position ?? "",
     country: initialData.country ?? "",
-    registrationType: "virtual", // Valor por defecto
+    registrationType: "presencial", // Valor por defecto
     password: "",
     role: isAdmin ? "admin" : "user",
   });

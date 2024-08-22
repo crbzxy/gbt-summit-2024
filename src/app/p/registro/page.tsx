@@ -58,7 +58,6 @@ export default function RegisterRemotoPage() {
       <Home />
       {/* <Register /> */}
       <RegisterForm
-        registrationType="presencial"
         mode="register" // Asegúrate de establecer el modo como "register"
         onSubmit={handleFormSubmit} // Pasa la función onSubmit
       />
