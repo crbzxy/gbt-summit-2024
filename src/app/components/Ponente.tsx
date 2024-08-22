@@ -28,10 +28,10 @@ const Ponente: React.FC<PonenteProps> = ({ name, title, category, description, i
 
         <div className="p-6">
           <h2 className="text-2xl font-bold text-[#006FCF]">{name}</h2>
-          <h3 className="text-lg font-semibold text-[#006FCF] mb-2">{title}</h3>
+          <h3 className="text-lg font-semibold text-[#006FCF] mb-2 max-w-96">{title}</h3>
         </div>
       </div>
-      <p className="text-gray-700 whitespace-pre-line">{description}</p>
+      <p className="text-gray-700 whitespace-pre-line ">{description}</p>
     </div>
   );
 };
