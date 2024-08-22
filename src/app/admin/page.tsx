@@ -199,15 +199,9 @@ export default function Admin() {
                   Editar Usuario
                 </h2>
                 <RegistrationForm
-<<<<<<< HEAD
                   mode="edit"
-=======
-                  registrationType={selectedUser.registrationType}
-                  mode='edit'
->>>>>>> develop
                   initialData={selectedUser}
                   onSubmit={handleUpdateUser}
-                  registrationType={selectedUser.registrationType} // Asegúrate de pasar registrationType
                 />
               </div>
               <div className='flex justify-end p-4'>
