@@ -47,9 +47,9 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
     const path = window.location.pathname + window.location.hash;
 
     if (path === "/" || path === "/#registro") {
-      setShowSelect(true); // Mostrar el select si estamos en la ruta general o con hash #registro
+      setShowSelect(false); // Mostrar el select si estamos en la ruta general o con hash #registro
     } else {
-      let registrationType = "general"; // Valor por defecto para rutas generales
+      let registrationType = "presencial"; // Valor por defecto para rutas generales
 
       if (path.includes("/p/registro")) {
         registrationType = "presencial";

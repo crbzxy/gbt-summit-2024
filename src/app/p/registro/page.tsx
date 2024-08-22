@@ -48,7 +48,7 @@ export default function RegisterRemotoPage() {
   const handleCloseModal = () => {
     setShowModal(false);
     // Redirigir al usuario a la página de inicio de sesión
-    router.push('/login');
+    router.push('/');
   };
 
   return (
