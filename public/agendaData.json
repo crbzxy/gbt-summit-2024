@@ -1,14 +1,50 @@
 [
   {
     "id": 1,
-    "horario": "09:00 - 10:00",
-    "ponencia": "Introducción a React",
-    "panelista": "John Doe"
+    "horario": "07:30 - 08:00",
+    "ponencia": "Registro",
+    "panelista": ""
   },
   {
     "id": 2,
-    "horario": "10:00 - 11:00",
-    "ponencia": "Técnicas de CSS",
-    "panelista": "Jane Smith"
+    "horario": "08:00 - 09:00",
+    "ponencia": "Desayuno & Bienvenida",
+    "panelista": "Augusto Zelaya"
+  },
+  {
+    "id": 3,
+    "horario": "09:00 - 09:30",
+    "ponencia": "Panel con Aeroméxico & Delta",
+    "panelista": "Aeroméxico y Delta"
+  },
+  {
+    "id": 4,
+    "horario": "09:30 - 10:00",
+    "ponencia": "Presentación de Marriott & Enterprise",
+    "panelista": "Marriot y Enterprise"
+  },
+  {
+    "id": 5,
+    "horario": "10:00 - 10:45",
+    "ponencia": "Panel “Mujeres exitosas en la industria de viajes”",
+    "panelista": "Sandra Vargas | Grupo Salinas, Fabiola Urtiaga | Casa Cuervo, Tania Zuleta | Flextronics, Daniella Jiménez | Medtronic"
+  },
+  {
+    "id": 6,
+    "horario": "10:45 - 11:00",
+    "ponencia": "Break",
+    "panelista": ""
+  },
+  {
+    "id": 7,
+    "horario": "11:00 - 12:00",
+    "ponencia": "Conferencia magistral con Gloria Guevara",
+    "panelista": "Gloria Guevara"
+  },
+  {
+    "id": 8,
+    "horario": "12:00 - 12:15",
+    "ponencia": "Cierre",
+    "panelista": "José Soberón"
   }
 ]

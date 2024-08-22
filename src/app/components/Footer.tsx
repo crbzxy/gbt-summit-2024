@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
         <footer className="bg-[#00175A] text-white py-8">
             <div className="container mx-auto px-4 flex-col items-center max-w-6xl">
                 <Image
-                    src="/gbtwhite.png" // Cambia esta ruta por la ubicación real de tu logo
+                    src="/gbtwhite.svg" // Cambia esta ruta por la ubicación real de tu logo
                     alt="American Express Global Business Travel Logo"
                     className="mb-4"
                     width={150} // Ajusta el tamaño del logo según sea necesario

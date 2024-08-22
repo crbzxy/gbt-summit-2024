@@ -1,62 +1,50 @@
-'use client';
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
 import InputField from "../components/InputField";
-import { v4 as uuidv4 } from 'uuid';
 
-export default function Login() {
-  // Estado para manejar el correo, errores, y la carga
+export default function AdminLogin() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(""); // Nuevo estado para la contraseña
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Función para obtener o generar un deviceId único
-  const getDeviceId = (): string => {
-    let deviceId = localStorage.getItem("deviceId");
-    if (!deviceId) {
-      deviceId = uuidv4();
-      localStorage.setItem("deviceId", deviceId);
+  useEffect(() => {
+    // Verificar si el usuario ya está autenticado como admin
+    const token = localStorage.getItem("token");
+    if (token) {
+      const { role } = JSON.parse(atob(token.split(".")[1]));
+      if (role === "admin") {
+        router.push("/admin");
+      }
     }
-    return deviceId;
-  };
+  }, [router]);
 
-  // Manejo del formulario de inicio de sesión
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
-    const deviceId = getDeviceId();
-
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("/api/auth/loginadmin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, deviceId }),
+        body: JSON.stringify({ email, password }),  // Aquí password debe ser el texto claro
       });
 
       if (response.ok) {
-        const { token, logoutToken } = await response.json();
-        
-        // Guardar los tokens en localStorage
+        const { token } = await response.json();
         localStorage.setItem("token", token);
-        localStorage.setItem("logoutToken", logoutToken);
-
-        // Verificar si los tokens se guardaron correctamente
-        console.log("Token guardado:", localStorage.getItem("token"));
-        console.log("LogoutToken guardado:", localStorage.getItem("logoutToken"));
 
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
         if (role === "admin") {
-          setError("Favor de verificar su correo.");
-          localStorage.removeItem("token");
-          localStorage.removeItem("logoutToken");
+          router.push("/admin");
         } else {
           router.push("/live");
         }
@@ -68,11 +56,20 @@ export default function Login() {
       if (err instanceof Error) {
         setError("Error al conectar con el servidor: " + err.message);
       } else {
-        setError("Error desconocido al conectar con el servidor");
+        setError("Error al conectar con el servidor");
       }
+      console.error("Error al conectar con el servidor", err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleRegisterRedirect = () => {
+    router.push("/admin"); // Redirigir a la página de registro de administradores
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   return (
@@ -88,6 +85,7 @@ export default function Login() {
         <h1 className="text-3xl font-bold mb-6 text-blue-600 text-center">
           Iniciar Sesión
         </h1>
+
         {error && (
           <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded-lg border border-red-200">
             {error}
@@ -100,6 +98,14 @@ export default function Login() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            mode="register"
+          />
+          <InputField
+            type="password"
+            placeholder="Contraseña"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             mode="register"
           />
           <button
@@ -115,7 +121,7 @@ export default function Login() {
           <p className="text-sm text-gray-600">
             ¿No tienes una cuenta?{" "}
             <button
-              onClick={() => router.push("/registro")}
+              onClick={handleRegisterRedirect}
               className="text-blue-600 hover:underline"
             >
               Regístrate aquí
@@ -124,14 +130,14 @@ export default function Login() {
         </div>
         <div className="mt-4 text-center absolute left-8 top-7">
           <button
-            onClick={() => router.back()}
+            onClick={handleBack}
             className="text-sm text-white hover:underline"
           >
             &larr; Volver
           </button>
+          <p className="text-center "> Admin mode</p>
         </div>
       </div>
     </div>
   );
 }
-

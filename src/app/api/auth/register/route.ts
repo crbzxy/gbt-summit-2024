@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
+import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar tokens únicos
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
   // Obtener los datos del cuerpo de la solicitud
   const { name, email, phone, company, position, country, registrationType } = await request.json();
 
-  // Verificación de campos requeridos (sin incluir la contraseña)
+  // Verificación de campos requeridos
   if (!name || !email || !phone || !company || !position || !country) {
     return NextResponse.json({ message: 'Faltan datos, favor de verificar.' }, { status: 400 });
   }
@@ -20,15 +21,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'El correo electrónico ya está registrado.' }, { status: 409 });
     }
 
-    // Crear un nuevo usuario sin contraseña
+    // Generar un logoutToken único
+    const logoutToken = uuidv4();
+
+    // Crear un nuevo usuario con todos los campos inicializados
     const user = new User({
       name,
       email,
       phone,
       company,
       position,
-      country, // Incluimos el país
-      registrationType: registrationType || 'website', // Establecer tipo de registro predeterminado
+      country,
+      role: 'user', // Asignación del rol por defecto
+      registrationType: registrationType || 'general', // Asignación del tipo de registro
+      sessionToken: null, // Inicializar sin token
+      sessionExpiresAt: null, // Sin fecha de expiración de sesión
+      lastActiveAt: null, // Sin actividad inicial
+      deviceId: null, // Sin dispositivo inicial
+      logoutToken, // Asignación del logoutToken generado
     });
 
     // Guardar el usuario en la base de datos
