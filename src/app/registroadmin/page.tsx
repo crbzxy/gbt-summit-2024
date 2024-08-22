@@ -58,7 +58,6 @@ export default function RegisterAdminPage() {
   return (
     <div id="registro">
       <RegisterForm
-        registrationType="general"
         mode="register"
         onSubmit={handleFormSubmit}
         isAdmin={true}
