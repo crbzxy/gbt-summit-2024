@@ -28,7 +28,7 @@ async function dbConnect(): Promise<mongoose.Connection> {
 
     cached.promise = mongoose.connect(MONGODB_URI, {
       // Eliminamos opciones obsoletas y utilizamos las nuevas opciones
-      dbName: 'TestGbt', // Nombre de la base de datos
+      dbName: 'ProdGbt', // Nombre de la base de datos
     }).then((mongoose) => {
       return mongoose.connection; // Devuelve la conexión
     });
