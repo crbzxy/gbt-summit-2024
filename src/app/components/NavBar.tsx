@@ -73,11 +73,11 @@ export default function Navbar() {
                                     Agenda
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link href="/login" className="bg-[#2563eb] text-white hover:bg-blue-500 px-6 py-2 rounded-xl text-sm font-medium transition duration-300">
                                     Login
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </nav>
                 </div>
@@ -96,9 +96,9 @@ export default function Navbar() {
                         <Link href="#agenda" className="block text-[#2563eb] hover:bg-[#2563eb] hover:text-white px-3 py-2 rounded-xl text-base font-medium" onClick={closeMenu}>
                             Agenda
                         </Link>
-                        <Link href="/login" className="block text-white bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl text-base font-medium transition duration-300" onClick={closeMenu}>
+                        {/* <Link href="/login" className="block text-white bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl text-base font-medium transition duration-300" onClick={closeMenu}>
                             Login
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             )}
