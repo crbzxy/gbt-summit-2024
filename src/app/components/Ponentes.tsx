@@ -51,16 +51,13 @@ const PonentesPage = () => {
         {
             id: '4',
             name: 'Daniella Jiménez',
-            title: 'Travel Manager para Medtronic',
+            title: 'Sr. Regional Strategic Sourcing Manager for Medtronic Latin America & Canada',
             category: 'Panel “Mujeres exitosas en la industria de viajes”',
             description: `
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-                commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu
-                feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore
-                te feugait nulla facilisi.
+               Líder de viajes con alta capacidad de gestión y planificación estratégica orientada a resultados y al desarrollo de equipos de alto rendimiento.
+Profesional de la contratación global con más de 25 años de experiencia en compras en grandes empresas multinacionales con trayectoria internacional y un historial probado de planificación y coordinación de estrategias de contratación, desarrollo de proveedores y gestión de proyectos. Además, lleva 16 años dirigiendo equipos multiculturales eficaces, colaborativos y motivados que han logrado con éxito objetivos de ahorro y metas corporativas. Experta en resolución de problemas, innovación y líder influyente para impulsar un valor sostenible e incremental.
             `,
-            image: '/marco.png',
+            image: '/DaniellaJimenez.png',
         },
         {
             id: '5',
