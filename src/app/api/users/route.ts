@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import dbConnect from '@/lib/dbConnect';
-import User from '@/models/User';
+import dbConnect from '../../../../lib/dbConnect';
+import User from '../../../../models/User';
 
 export async function GET(request: Request) {
   await dbConnect();
