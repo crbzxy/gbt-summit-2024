@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Loader from "@/app/components/Loader";
-import InputField from "@/app/components/InputField";
+import Loader from "../components/Loader";
+import InputField from "../components/InputField";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");

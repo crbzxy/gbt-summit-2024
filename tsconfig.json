@@ -19,7 +19,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]  // Esto apunta a la carpeta "src"
+      "@/*": ["src/*"] // Asegúrate de que la carpeta "src/" exista en tu proyecto
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/dbConnect';
-import User from '@/models/User';
+import dbConnect from '../../../../lib/dbConnect';
+import User from '../../../../models/User';
 import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar tokens únicos
 
 export async function POST(request: Request) {

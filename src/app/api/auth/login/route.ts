@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import dbConnect from '@/lib/dbConnect';
-import User from '@/models/User';
+import dbConnect from "../../../../lib/dbConnect";
+import User from "../../../../models/User";
 import { addHours, isAfter } from "date-fns";
 
 export async function POST(request: Request) {

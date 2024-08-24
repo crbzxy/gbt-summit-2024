@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import InputField from "@/app/components/InputField";
-import useCountries from "@/app/hooks/useCountries";
+import InputField from "../components/InputField";
+import useCountries from "../hooks/useCountries";
 import { v4 as uuidv4 } from "uuid"; // Importa uuid para generar tokens únicos
 
 export type FormState = {
