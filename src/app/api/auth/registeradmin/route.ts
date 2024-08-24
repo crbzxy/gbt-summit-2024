@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '../../../../lib/dbConnect';
-import User from '../../../../models/User';
+import dbConnect from '@/lib/dbConnect';
+import User from '@/models/User';
 
 export async function POST(request: Request) {
   console.log("Iniciando proceso de registro de administrador");
