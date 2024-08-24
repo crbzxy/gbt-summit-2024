@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import dbConnect from '@/lib/dbConnect';
-import User from '@/models/User';
+import dbConnect from '../lib/dbConnect';
+import User from '../models/User';
 
 export async function middleware(request: NextRequest) {
   const token = request.headers.get('Authorization')?.split(' ')[1];
