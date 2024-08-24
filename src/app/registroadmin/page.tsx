@@ -2,8 +2,8 @@
 
 
 import React, { useState } from 'react';
-import RegisterForm, { FormState } from "../components/RegisterForm";
-import SuccessModal from '../components/SuccessModal';
+import RegisterForm, { FormState } from "@/app/components/RegisterForm";
+import SuccessModal from '@/app/components/SuccessModal';
 import { useRouter } from 'next/navigation';
 
 export default function RegisterAdminPage() {
