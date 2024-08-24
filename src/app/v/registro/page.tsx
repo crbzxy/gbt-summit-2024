@@ -5,11 +5,11 @@ import React, { useState } from 'react';
 import RegisterForm, { FormState } from "../../components/RegisterForm";
 import SuccessModal from '../../components/SuccessModal';
 import { useRouter } from 'next/navigation'; // Importa el hook de navegación
-import Navbar from '../../components/NavBar';
-import Home from '../../home/page';
-import Agenda from '../../components/Agenda';
-import Footer from '../../components/Footer';
-import PonentesPage from '../../components/Ponentes';
+import Navbar from '@/app/components/NavBar';
+import Home from '@/app/home/page';
+import Agenda from '@/app/components/Agenda';
+import Footer from '@/app/components/Footer';
+import PonentesPage from '@/app/components/Ponentes';
 
 export default function RegisterRemotoPage() {
   const [showModal, setShowModal] = useState(false);
