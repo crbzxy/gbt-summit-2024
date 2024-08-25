@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Loader from "@/app/components/Loader";
-import InputField from "@/app/components/InputField";
+import Loader from "../components/Loader";
+import InputField from "../components/InputField";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Login() {
