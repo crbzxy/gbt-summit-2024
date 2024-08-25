@@ -1,0 +1,22 @@
+steps:
+  # Step 1: Construir la imagen de Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/vortex-gbtsummit/vortex-gbtsummit', '.']
+
+  # Step 2: Subir la imagen al Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/vortex-gbtsummit/vortex-gbtsummit']
+
+  # Step 3: Desplegar en Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'deploy', 'vortex-gbtsummit',
+      '--image', 'gcr.io/vortex-gbtsummit/vortex-gbtsummit',
+      '--platform', 'managed',
+      '--region', 'us-central1',
+      '--allow-unauthenticated',
+      '--set-env-vars', 'MONGODB_URI=$MONGODB_URI,JWT_SECRET=$JWT_SECRET'
+    ]
+
+images:
+  - 'gcr.io/vortex-gbtsummit/vortex-gbtsummit'

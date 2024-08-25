@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Home from "./home/page";
-import Loader from "./components/Loader";
-import Navbar from "./components/NavBar";
-import Register from "./registro/page";
-import PonentesPage from "./components/Ponentes";
-import Agenda from "./components/Agenda";
-import Footer from "./components/Footer";
+import Home from "@/app/home/page";
+import Loader from "@/app/components/Loader";
+import Navbar from "@/app/components/NavBar";
+import Register from "@/app/registro/page";
+import PonentesPage from "@/app/components/Ponentes";
+import Agenda from "@/app/components/Agenda";
+import Footer from "@/app/components/Footer";
 
 export default function Index() {
   const router = useRouter();
