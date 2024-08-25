@@ -10,8 +10,8 @@ COPY package*.json ./
 # Agrega las variables de entorno
 ARG MONGODB_URI
 ARG JWT_SECRET
-ENV MONGODB_URI=$MONGODB_URI
-ENV JWT_SECRET=$JWT_SECRET
+ENV MONGODB_URI="$MONGODB_URI"
+ENV JWT_SECRET="$JWT_SECRET"
 
 # Instala las dependencias del proyecto
 RUN npm install
@@ -20,7 +20,7 @@ RUN npm install
 COPY . .
 
 # Construye la aplicación Next.js para producción
-RUN npm run build
+RUN MONGODB_URI="$MONGODB_URI" JWT_SECRET="$JWT_SECRET" npm run build
 
 # Segunda fase: imagen de producción ligera
 FROM node:18-alpine AS production
