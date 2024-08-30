@@ -10,11 +10,17 @@ import PonentesPage from "@/app/components/Ponentes";
 import Agenda from "@/app/components/Agenda";
 import Footer from "@/app/components/Footer";
 
+// Importa package.json
+import packageJson from "../../package.json";
+
 export default function Index() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Log de la versión de la aplicación
+    console.log("App version:", packageJson.version);
+
     const token = localStorage.getItem("token");
     if (token) {
       const { role } = JSON.parse(atob(token.split(".")[1]));
