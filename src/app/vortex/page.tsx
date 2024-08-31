@@ -68,9 +68,10 @@ export default function AdminLogin() {
     router.push("/admin"); // Redirigir a la página de registro de administradores
   };
 
-  const handleBack = () => {
-    router.back();
-  };
+  
+ const handleBack = () => {
+    router.push('/');
+  };;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">

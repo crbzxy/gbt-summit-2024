@@ -42,7 +42,7 @@ export default function Login() {
 
       if (response.ok) {
         const { token, logoutToken } = await response.json();
-        
+
         // Guardar los tokens en localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("logoutToken", logoutToken);
@@ -74,6 +74,11 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+
+  const handleBack = () => {
+    router.push('/');
+  };;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
@@ -124,7 +129,7 @@ export default function Login() {
         </div>
         <div className="mt-4 text-center absolute left-8 top-7">
           <button
-            onClick={() => router.back()}
+            onClick={handleBack}
             className="text-sm text-white hover:underline"
           >
             &larr; Volver
