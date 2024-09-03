@@ -198,7 +198,9 @@ export default function VortexDashboard() {
     });
 
     const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
 
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -208,25 +210,32 @@ export default function VortexDashboard() {
 
   // Calcular total de usuarios y distribución de dominios de correo
   const totalUsers = filteredUsers.length;
-  const emailDomains = filteredUsers.reduce((acc: Record<string, number>, user) => {
-    const domain = user.email.split('@')[1];
-    acc[domain] = (acc[domain] || 0) + 1;
-    return acc;
-  }, {});
+  const emailDomains = filteredUsers.reduce(
+    (acc: Record<string, number>, user) => {
+      const domain = user.email.split('@')[1].toLowerCase(); // Convertir a minúsculas para evitar duplicados por mayúsculas/minúsculas
+      acc[domain] = (acc[domain] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
 
   // Ordenar alfabéticamente los dominios de correo
-  const sortedDomains = Object.keys(emailDomains).sort();
-  const sortedDomainData = sortedDomains.map(domain => emailDomains[domain]);
+  const sortedDomains = Object.keys(emailDomains).sort(
+    (a, b) => emailDomains[b] - emailDomains[a]
+  ); // Ordenar por número de usuarios de manera descendente
+  const topTenDomains = sortedDomains.slice(0, 10); // Obtener los 10 dominios con más usuarios
+  const topTenData = topTenDomains.map((domain) => emailDomains[domain]);
 
   const chartData = {
-    labels: sortedDomains,
+    labels: topTenDomains,
     datasets: [
       {
         label: 'Usuarios por dominio',
-        data: sortedDomainData,
-        backgroundColor: '#4CAF50', // Verde Vortex
-        borderColor: '#2E7D32', // Verde más oscuro
+        data: topTenData,
+        backgroundColor: '#4CAF50', // Verde Vortex para el fondo
+        borderColor: '#2E7D32', // Verde más oscuro para el borde
         borderWidth: 1,
+        color: 'white',
       },
     ],
   };
@@ -234,10 +243,102 @@ export default function VortexDashboard() {
   const chartOptions = {
     maintainAspectRatio: false,
     responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: 'white', // Color blanco para las etiquetas del gráfico
+        },
+      },
+      title: {
+        display: true,
+        text: 'Top 10 dominios',
+        color: 'white', // Color blanco para el título
+        font: {
+          size: 20,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white', // Color blanco para las etiquetas del eje X
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white', // Color blanco para las etiquetas del eje Y
+        },
+      },
+    },
   };
 
+  // Calcular la empresa con más usuarios
+  const companyCounts = filteredUsers.reduce(
+    (acc: Record<string, number>, user) => {
+      acc[user.company] = (acc[user.company] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
+  const maxCompany = Object.keys(companyCounts).reduce(
+    (a, b) => (companyCounts[a] > companyCounts[b] ? a : b),
+    ''
+  );
+
+  const maxCompanyCount = maxCompany ? companyCounts[maxCompany] : 0;
+
   // Ordenar alfabéticamente las empresas en el filtro
-  const uniqueCompanies = Array.from(new Set(users.map(user => user.company))).sort();
+  const uniqueCompanies = Array.from(
+    new Set(users.map((user) => user.company))
+  ).sort();
+
+  // Datos para el gráfico de empresas
+  const companyData = {
+    labels: Object.keys(companyCounts),
+    datasets: [
+      {
+        label: 'Usuarios por empresa',
+        data: Object.values(companyCounts),
+        backgroundColor: '#4CAF50', // Verde Vortex para el fondo
+        borderColor: '#2E7D32', // Verde más oscuro para el borde
+        borderWidth: 1,
+        color: 'white',
+      },
+    ],
+  };
+
+  const companyChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: 'white', // Color blanco para las etiquetas del gráfico
+        },
+      },
+      title: {
+        display: true,
+        text: 'Distribución de usuarios por empresa',
+        color: 'white', // Color blanco para el título
+        font: {
+          size: 20,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white', // Color blanco para las etiquetas del eje X
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white', // Color blanco para las etiquetas del eje Y
+        },
+      },
+    },
+  };
 
   return (
     <div className='min-h-screen bg-gray-900 p-8'>
@@ -266,19 +367,35 @@ export default function VortexDashboard() {
         </div>
 
         {error && <div className='text-red-600 mb-4 text-center'>{error}</div>}
-
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6'>
+          <div className='bg-gray-800 p-4 rounded-lg shadow-md'>
+            <h3 className='text-green-400 text-xl font-semibold'>
+              Total de usuarios
+            </h3>
+            <p className='text-white text-3xl font-bold'>{totalUsers}</p>
+          </div>
+          <div className='bg-gray-800 p-4 rounded-lg shadow-md'>
+            <h3 className='text-green-400 text-xl font-semibold'>
+              Dominio más popular
+            </h3>
+            <p className='text-white text-2xl font-bold'>{topTenDomains[0]}</p>
+            <p className='text-white text-sm'>Usuarios: {topTenData[0]}</p>
+          </div>
+          <div className='bg-gray-800 p-4 rounded-lg shadow-md'>
+            <h3 className='text-green-400 text-xl font-semibold'>
+              Empresa con más usuarios
+            </h3>
+            <p className='text-white text-2xl font-bold'>{maxCompany}</p>
+            <p className='text-white text-sm'>Usuarios: {maxCompanyCount}</p>
+          </div>
+        </div>
         <div className='mb-6'>
-          <h2 className='text-2xl font-bold text-green-400 mb-4'>Dashboard</h2>
           <div className='flex items-center space-x-4 mb-4'>
-            <p className='text-lg font-medium text-white'>
-              Total de usuarios: <span className='text-green-400'>{totalUsers}</span>
-            </p>
             <select
               className='py-2 px-4 bg-gray-700 text-white border border-gray-600 rounded-lg'
               value={selectedCompany}
-              onChange={handleCompanyChange}
-            >
-              <option value="All">Todas las empresas</option>
+              onChange={handleCompanyChange}>
+              <option value='All'>Todas las empresas</option>
               {uniqueCompanies.map((company) => (
                 <option key={company} value={company}>
                   {company}
@@ -286,11 +403,18 @@ export default function VortexDashboard() {
               ))}
             </select>
           </div>
-          <div className='mt-2 bg-gray-700 p-4 rounded-lg shadow-inner'>
+          <div className='bg-gray-800 p-4 rounded-lg shadow-md'>
             <div style={{ height: '400px' }}>
               <Bar data={chartData} options={chartOptions} />
             </div>
           </div>
+          <div className='bg-gray-800 p-4 rounded-lg shadow-md mt-6'>
+            <div style={{ height: '400px' }}>
+              <Bar data={companyData} options={companyChartOptions} />
+            </div>
+          </div>
+
+          {/* Resumen para tomar decisiones rápidas */}
         </div>
 
         <div className='overflow-hidden rounded-lg shadow'>
@@ -316,9 +440,15 @@ export default function VortexDashboard() {
                   <td className='py-4 px-4 text-sm text-white'>{user.name}</td>
                   <td className='py-4 px-4 text-sm text-white'>{user.email}</td>
                   <td className='py-4 px-4 text-sm text-white'>{user.phone}</td>
-                  <td className='py-4 px-4 text-sm text-white'>{user.company}</td>
-                  <td className='py-4 px-4 text-sm text-white'>{user.position}</td>
-                  <td className='py-4 px-4 text-sm text-white'>{user.registrationType}</td>
+                  <td className='py-4 px-4 text-sm text-white'>
+                    {user.company}
+                  </td>
+                  <td className='py-4 px-4 text-sm text-white'>
+                    {user.position}
+                  </td>
+                  <td className='py-4 px-4 text-sm text-white'>
+                    {user.registrationType}
+                  </td>
                   <td className='py-4 px-4 text-sm'>
                     <button
                       onClick={() => handleEditUser(user)}
@@ -334,22 +464,20 @@ export default function VortexDashboard() {
 
         {/* Modal para edición de usuario */}
         {selectedUser && (
-          <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
-            <div className='rounded-lg overflow-hidden shadow-lg w-11/12 md:w-3/4 lg:w-1/2 bg-gray-800'>
-              <div className='p-6'>
-                <h2 className='text-2xl font-bold mb-4 text-center text-green-400'>
-                  Editar Usuario
-                </h2>
-                <RegistrationForm
-                  mode="edit"
-                  initialData={selectedUser}
-                  onSubmit={handleUpdateUser}
-                />
-              </div>
-              <div className='flex justify-end p-4'>
+          <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-200'>
+            <div className='rounded-lg overflow-hidden shadow-lg w-11/12 md:w-3/4 lg:w-1/2 bg-gray-800 p-6'>
+              <h2 className='text-2xl font-bold text-green-400 mb-4'>
+                Editar Usuario
+              </h2>
+              <RegistrationForm
+                mode='edit'
+                initialData={selectedUser}
+                onSubmit={handleUpdateUser}
+              />
+              <div className='flex justify-end mt-4'>
                 <button
                   onClick={closeModal}
-                  className='py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors'>
+                  className='py-2 px-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors'>
                   Cerrar
                 </button>
               </div>
