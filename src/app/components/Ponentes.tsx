@@ -38,7 +38,7 @@ const PonentesPage = () => {
         {
             id: '3',
             name: 'Tania Alejandra Zuleta Martínez',
-            title: 'Travel Manager para Flextronics',
+            title: 'Travel Manager para Flex',
             category: 'Panel “Mujeres exitosas en la industria de viajes”',
             description: `
                 Licenciada en Administración y Finanzas por la Universidad Panamericana campus Guadalajara.
