@@ -58,8 +58,8 @@ export default function VortexDashboard() {
     const fetchUsers = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        setError('Token no encontrado. Redirigiendo al login...');
-        router.push('/login');
+        setError('Token no encontrado. Redirigiendo a un vortex...');
+        router.push('/vortex');
         return;
       }
 

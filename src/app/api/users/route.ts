@@ -32,7 +32,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ users }, { status: 200 });
   } catch (err: unknown) {
     if (err instanceof Error) {
-      console.error('Error al verificar el token:', err.message);
+      console.error('**Error al verificar el token:', err.message);
       return NextResponse.json({ message: 'Token inválido o expirado' }, { status: 401 });
     }
     console.error('Error desconocido al verificar el token');
