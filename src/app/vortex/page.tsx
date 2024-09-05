@@ -13,6 +13,10 @@ export default function AdminLogin() {
   const router = useRouter();
 
   useEffect(() => {
+    // Elimina cualquier token almacenado en localStorage o sessionStorage
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+  
     // Verificar si el usuario ya está autenticado como admin
     const token = localStorage.getItem("token");
     if (token) {
@@ -22,6 +26,7 @@ export default function AdminLogin() {
       }
     }
   }, [router]);
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
