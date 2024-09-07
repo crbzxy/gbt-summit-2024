@@ -7,14 +7,13 @@ interface PonenteProps {
   description: string;
   image: string;
   reverse?: boolean;
-  index: number; // Agrega esta línea
 }
 
-const Ponente: React.FC<PonenteProps> = ({ name, title, category, description, image, reverse = false, index }) => {
+const Ponente: React.FC<PonenteProps> = ({ name, title, category, description, image, reverse = false }) => {
   return (
     <div className={`flex flex-col text-left overflow-hidden my-8`}>
       <p className="text-4xl font-bold text-[#006FCF] mb-12">
-        Ponente {index + 1}: {category}
+        {category}
       </p>
 
       <div className="w-full p-4 flex justify-center items-center">

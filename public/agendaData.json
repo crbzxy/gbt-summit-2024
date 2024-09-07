@@ -25,25 +25,31 @@
   },
   {
     "id": 5,
-    "horario": "10:00 - 10:45",
-    "ponencia": "Panel “Mujeres exitosas en la industria de viajes”",
-    "panelista": "Sandra Vargas | Grupo Salinas, Fabiola Urtiaga | Casa Cuervo, Tania Zuleta | Flextronics, Daniella Jiménez | Medtronic"
-  },
-  {
-    "id": 6,
-    "horario": "10:45 - 11:00",
+    "horario": "10:00 - 10:15",
     "ponencia": "Break",
     "panelista": ""
   },
   {
+    "id": 6,
+    "horario": "10:15 - 11:05",
+    "ponencia": "Panel “Mujeres exitosas en la industria de viajes”",
+    "panelista": "Sandra Vargas - Grupo Salinas | Fabiola Urtiaga - Casa Cuervo | Tania Zuleta - Flex | Daniella Jiménez - Medtronic"
+  },
+  {
     "id": 7,
-    "horario": "11:00 - 12:00",
+    "horario": "11:05 - 11:15",
+    "ponencia": "Break",
+    "panelista": ""
+  },
+  {
+    "id": 8,
+    "horario": "11:15 - 12:10",
     "ponencia": "Conferencia magistral con Gloria Guevara",
     "panelista": "Gloria Guevara"
   },
   {
-    "id": 8,
-    "horario": "12:00 - 12:15",
+    "id": 9,
+    "horario": "12:10 - 12:25",
     "ponencia": "Cierre",
     "panelista": "José Soberón"
   }

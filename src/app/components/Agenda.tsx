@@ -41,11 +41,11 @@ const Agenda: React.FC = () => {
             <table className="w-full text-center border-collapse max-w-5xl m-auto">
                 <thead >
                     <tr className=" text-white mb-5">
-                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '15%' }}>Horario</th>
+                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '20%' }}>Horario</th>
                         <th className="p-4 rounded-full" style={{ width: '2.5%' }}></th>
-                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '40%' }}>Actividad</th>
+                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '35%' }}>Actividad</th>
                         <th className="p-4 rounded-full" style={{ width: '2.5%' }}></th>
-                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '35%' }}>Ponentes</th>
+                        <th className="p-4 rounded-md bg-[#006FCF]" style={{ width: '50%' }}>Ponentes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,9 +65,9 @@ const Agenda: React.FC = () => {
                                 margin: '8px 0',
                             }}
                         >
-                            <td className="p-2 " colSpan={2} style={{ borderEndStartRadius: 12, borderTopLeftRadius:12}}>{item.horario}</td>
-                            <td className="p-2" colSpan={2}>{item.ponencia}</td>
-                            <td className="p-2" style={{ borderEndEndRadius: 12, borderTopRightRadius:12}}>{item.panelista}</td>
+                            <td className="p-2 text-sm	" colSpan={2} style={{ borderEndStartRadius: 12, borderTopLeftRadius:12}}>{item.horario}</td>
+                            <td className="p-2 text-sm	" colSpan={2}>{item.ponencia}</td>
+                            <td className="p-2 text-xs	" style={{ borderEndEndRadius: 12, borderTopRightRadius:12}}>{item.panelista}</td>
                         </tr>
                     ))}
                 </tbody>
