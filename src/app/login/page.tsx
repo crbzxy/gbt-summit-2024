@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
 import InputField from "../components/InputField";
 import { v4 as uuidv4 } from 'uuid';
+import Image from 'next/image'; // Importa Image desde next/image
 
 export default function Login() {
   // Estado para manejar el correo, errores, y la carga
@@ -82,7 +83,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
-      <img
+      <Image
         src="/gbtwhite.svg"
         alt="American Express Logo"
         width={120}

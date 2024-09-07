@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/Loader";
 import InputField from "@/app/components/InputField";
+import Image from "next/image";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -80,7 +81,7 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
-      <img
+       <Image
         src="/gbtwhite.svg"
         alt="American Express Logo"
         width={120}

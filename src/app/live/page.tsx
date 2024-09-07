@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image'; // Importa el componente Image de Next.js
 
 export default function UserPage() {
   const router = useRouter();
@@ -10,40 +11,36 @@ export default function UserPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Función de logout
-// Función de logout
-const handleLogout = async () => {
-  const token = localStorage.getItem('token');
-  const logoutToken = localStorage.getItem('logoutToken');
+  const handleLogout = async () => {
+    const token = localStorage.getItem('token');
+    const logoutToken = localStorage.getItem('logoutToken');
 
-  // Verifica que el token y logoutToken no sean undefined
-  if (!token || !logoutToken) {
-    console.error('Token o logoutToken no están disponibles o son inválidos');
-    return;
-  }
+    // Verifica que el token y logoutToken no sean undefined
+    if (!token || !logoutToken) {
+      console.error('Token o logoutToken no están disponibles o son inválidos');
+      return;
+    }
 
-  try {
-    const response = await fetch('/api/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({ logoutToken }),
-    });
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ logoutToken }),
+      });
 
-    const data = await response.json();
-    console.log(data);
-  } catch (err) {
-    console.error('Error al cerrar sesión:', err);
-  } finally {
-    localStorage.removeItem('token');
-    localStorage.removeItem('logoutToken');
-    router.replace('/');
-  }
-};
-
-
-  
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.error('Error al cerrar sesión:', err);
+    } finally {
+      localStorage.removeItem('token');
+      localStorage.removeItem('logoutToken');
+      router.replace('/');
+    }
+  };
 
   useEffect(() => {
     const checkAuth = () => {
@@ -73,10 +70,12 @@ const handleLogout = async () => {
         <div className='mx-auto w-full px-4 sm:px-6 lg:px-8'>
           <div className='flex h-16 items-center justify-between'>
             <div className='flex items-center'>
-              <img
-                className='h-10 w-auto'
+              <Image
                 src='/logo.png'
                 alt='Logo de la Empresa'
+                width={40}  // Ajusta el tamaño según sea necesario
+                height={40} // Ajusta el tamaño según sea necesario
+                className='h-10 w-auto'
               />
             </div>
 

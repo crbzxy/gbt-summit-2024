@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import InputField from "../components/InputField";
 import useCountries from "../hooks/useCountries";
 import { v4 as uuidv4 } from "uuid"; // Importa uuid para generar tokens únicos
+import Image from "next/image"; // Importa el componente de Next.js
 
 export type FormState = {
   name: string;
@@ -21,7 +22,6 @@ interface RegistrationFormProps {
   initialData?: Partial<FormState>;
   onSubmit: (data: FormState) => Promise<void>;
   isAdmin?: boolean;
-  // registrationType?: string;
 }
 
 const RegisterForm: React.FC<RegistrationFormProps> = ({
@@ -59,7 +59,6 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
 
       // Luego, establece el estado
       setFormData((prevData) => ({ ...prevData, registrationType }));
-
     }
   }, []);
 
@@ -171,12 +170,13 @@ const RegisterForm: React.FC<RegistrationFormProps> = ({
       <div className="flex flex-col md:flex-row items-center justify-center">
         {mode !== "edit" && (
           <div className="h-auto">
-            <img
+            <Image
               src="/tarjeta.svg"
               alt="Tarjeta"
-              className="w-[500px] h-4/6 rounded-lg min-w-[320px]"
+              width={500}
+              height={500} // Ajusta según sea necesario
+              className="rounded-lg min-w-[320px]"
             />
-
           </div>
         )}
         <div className="p-8">
