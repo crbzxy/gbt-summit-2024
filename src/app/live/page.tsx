@@ -71,7 +71,7 @@ export default function UserPage() {
           <div className='flex h-16 items-center justify-between'>
             <div className='flex items-center'>
               <Image
-                src='/logo.png'
+                src='/logo.svg' // Ruta de la imagen
                 alt='Logo de la Empresa'
                 width={40}  // Ajusta el tamaño según sea necesario
                 height={40} // Ajusta el tamaño según sea necesario

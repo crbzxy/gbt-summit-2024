@@ -37,6 +37,8 @@ export default function RootLayout({
             `,
           }}
         />
+{/* Google tag (gtag.js) */}
+
       </head>
       <body className={inter.className}>
         {children}
