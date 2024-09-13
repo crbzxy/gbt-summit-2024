@@ -1,18 +1,25 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import dbConnect from "../../../../lib/dbConnect";
+import { dbConnect } from "@/lib/dbConnect";
 import User from "../../../../models/User";
 import { addHours, isAfter } from "date-fns";
+import { formatInTimeZone, toDate } from 'date-fns-tz';
+
+const MEXICO_TIMEZONE = 'America/Mexico_City';
+
+function getMexicoCityTime() {
+  return formatInTimeZone(new Date(), MEXICO_TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+}
 
 export async function POST(request: Request) {
   await dbConnect();
 
-  const { email, deviceId } = await request.json();
+  const { email } = await request.json();
 
-  if (!email || !deviceId) {
+  if (!email) {
     return NextResponse.json(
       {
-        message: "El correo electrónico y el ID del dispositivo son requeridos.",
+        message: "El correo electrónico es requerido.",
       },
       { status: 400 }
     );
@@ -28,19 +35,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Verificar si el dispositivo ya está registrado para este usuario
-    if (user.deviceId && user.deviceId !== deviceId && user.sessionToken) {
-      // Invalida la sesión actual si se intenta iniciar desde un dispositivo diferente
-      return NextResponse.json(
-        {
-          message:
-            "Sesión iniciada en otro dispositivo. Cierre la sesión actual para continuar.",
-        },
-        { status: 409 }
-      );
-    }
-
-    // Generar un nuevo token JWT con una expiración de 4 horas
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       return NextResponse.json(
@@ -53,21 +47,27 @@ export async function POST(request: Request) {
       expiresIn: "4h",
     });
 
-    // Calcular la fecha de expiración de la sesión
-    const now = new Date();
-    const sessionExpirationLimit = new Date("2024-09-26T13:00:00Z"); // 1pm UTC
-    let sessionExpiresAt = addHours(now, 4);
+    const now = getMexicoCityTime();
+    const sessionExpirationLimit = toDate(formatInTimeZone(new Date("2024-09-26T13:00:00Z"), MEXICO_TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX"));
+    let sessionExpiresAt = toDate(formatInTimeZone(addHours(new Date(), 4), MEXICO_TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX"));
+
     if (isAfter(sessionExpiresAt, sessionExpirationLimit)) {
-      sessionExpiresAt = sessionExpirationLimit; // Forzar la expiración a las 1pm del 26 de septiembre de 2024
+      sessionExpiresAt = sessionExpirationLimit;
     }
 
-    // Actualizar el token, la fecha de expiración de la sesión, el ID del dispositivo y la última actividad en la base de datos
     user.sessionToken = token;
     user.sessionExpiresAt = sessionExpiresAt;
-    user.deviceId = deviceId;
-    user.lastActiveAt = now;
-    user.logoutToken = undefined; // Se permite un nuevo login eliminando el logoutToken
+    user.lastActiveAt = toDate(now);
+    user.sessionStartedAt = toDate(now);
+    user.logoutToken = undefined;
+
     await user.save();
+
+    console.log("Inicio de sesión exitoso. Detalles de la sesión:", {
+      sessionStartedAt: formatInTimeZone(user.sessionStartedAt, MEXICO_TIMEZONE, "yyyy-MM-dd HH:mm:ss zzz"),
+      sessionExpiresAt: formatInTimeZone(user.sessionExpiresAt, MEXICO_TIMEZONE, "yyyy-MM-dd HH:mm:ss zzz"),
+      lastActiveAt: formatInTimeZone(user.lastActiveAt, MEXICO_TIMEZONE, "yyyy-MM-dd HH:mm:ss zzz")
+    });
 
     return NextResponse.json(
       { message: "Inicio de sesión exitoso", token },

@@ -12,10 +12,14 @@ interface IUser extends Document {
   registrationType: string;
   sessionToken?: string;
   sessionExpiresAt?: Date;
+  sessionStartedAt?: Date; // Añadir este campo para almacenar el inicio de la sesión
   lastActiveAt?: Date;
   deviceId?: string;
   logoutToken?: string; // Token para controlar el logout
   password?: string;
+
+  comparePassword(password: string): Promise<boolean>; // Método para comparar contraseñas
+  isSessionValid(): boolean; // Método para validar la sesión
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -29,6 +33,7 @@ const userSchema = new mongoose.Schema<IUser>({
   registrationType: { type: String, enum: ['general', 'presencial', 'virtual'], default: 'general' },
   sessionToken: { type: String },
   sessionExpiresAt: { type: Date },  // Fecha de expiración de la sesión
+  sessionStartedAt: { type: Date },  // Fecha de inicio de la sesión
   lastActiveAt: { type: Date },  // Fecha de última actividad
   deviceId: { type: String },  // ID del dispositivo
   logoutToken: { type: String }, // Token de salida para validar el cierre de sesión
@@ -65,6 +70,21 @@ userSchema.methods.isSessionValid = function (): boolean {
   if (!user.sessionExpiresAt) return false;
   return new Date() < user.sessionExpiresAt;
 };
+
+userSchema.methods.updateLastActive = function () {
+  const user = this as IUser;
+  user.lastActiveAt = new Date();
+  return user.save();
+};
+
+// Middleware que actualiza la última actividad antes de guardar
+userSchema.pre('save', function (next: (err?: CallbackError) => void) {
+  const user = this as IUser;
+  if (user.isModified()) {
+    user.lastActiveAt = new Date();
+  }
+  next();
+});
 
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 

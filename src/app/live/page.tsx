@@ -3,42 +3,30 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image'; // Importa el componente Image de Next.js
+import Image from 'next/image';
 
 export default function UserPage() {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Función de logout
+  // Función mejorada para cerrar sesión
   const handleLogout = async () => {
-    const token = localStorage.getItem('token');
-    const logoutToken = localStorage.getItem('logoutToken');
-
-    // Verifica que el token y logoutToken no sean undefined
-    if (!token || !logoutToken) {
-      console.error('Token o logoutToken no están disponibles o son inválidos');
-      return;
-    }
-
     try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ logoutToken }),
-      });
+      // Opcionalmente, puedes hacer una llamada a la API para invalidar el token en el servidor
+      // await fetch('/api/logout', { method: 'POST' });
 
-      const data = await response.json();
-      console.log(data);
-    } catch (err) {
-      console.error('Error al cerrar sesión:', err);
-    } finally {
+      // Elimina el token del almacenamiento local
       localStorage.removeItem('token');
-      localStorage.removeItem('logoutToken');
-      router.replace('/');
+      
+      // Cierra el dropdown y el menú móvil
+      setShowDropdown(false);
+      setIsMenuOpen(false);
+
+      // Redirige al usuario a la página de inicio de sesión
+      router.push('/login');
+    } catch (error) {
+      console.error('Error durante el cierre de sesión:', error);
     }
   };
 
@@ -53,15 +41,8 @@ export default function UserPage() {
     checkAuth();
   }, [router]);
 
-  // Función para alternar la visibilidad del dropdown
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
-
-  // Función para alternar la visibilidad del menú móvil
-  const toggleMobileMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleDropdown = () => setShowDropdown(!showDropdown);
+  const toggleMobileMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <div className='min-h-full'>
@@ -71,10 +52,10 @@ export default function UserPage() {
           <div className='flex h-16 items-center justify-between'>
             <div className='flex items-center'>
               <Image
-                src='/logo.svg' // Ruta de la imagen
+                src='/logo.svg'
                 alt='Logo de la Empresa'
-                width={40}  // Ajusta el tamaño según sea necesario
-                height={40} // Ajusta el tamaño según sea necesario
+                width={40}
+                height={40}
                 className='h-10 w-auto'
               />
             </div>
@@ -83,22 +64,24 @@ export default function UserPage() {
               <div className='ml-4 flex items-center md:ml-6'>
                 <button
                   type='button'
-                  className='relative flex items-center justify-center p-2 text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                  className='relative flex items-center justify-center p-2 text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
                   id='user-menu-button'
-                  aria-expanded='false'
+                  aria-expanded={showDropdown}
                   aria-haspopup='true'
-                  onClick={toggleDropdown}>
+                  onClick={toggleDropdown}
+                >
                   <span className='sr-only'>Open user menu</span>
                   <svg
                     className='h-6 w-6'
                     fill='none'
                     viewBox='0 0 24 24'
-                    strokeWidth='2'
-                    stroke='blue'
-                    aria-hidden='true'>
+                    stroke='currentColor'
+                    aria-hidden='true'
+                  >
                     <path
                       strokeLinecap='round'
                       strokeLinejoin='round'
+                      strokeWidth={2}
                       d='M4 6h16M4 12h16m-7 6h7'
                     />
                   </svg>
@@ -106,20 +89,20 @@ export default function UserPage() {
 
                 {showDropdown && (
                   <div
-                    className='absolute right-0 z-10 w-48 origin-top-right rounded-md bg-white py-1 mt-20 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+                    className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
                     role='menu'
                     aria-orientation='vertical'
                     aria-labelledby='user-menu-button'
-                    tabIndex={-1}>
-                    <Link
-                      href='#'
-                      className='block px-4 py-2 text-sm text-gray-700'
+                    tabIndex={-1}
+                  >
+                    <button
+                      className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                       role='menuitem'
                       tabIndex={-1}
-                      id='user-menu-item-2'
-                      onClick={handleLogout}>
+                      onClick={handleLogout}
+                    >
                       Cerrar Sesión
-                    </Link>
+                    </button>
                   </div>
                 )}
               </div>
@@ -130,8 +113,9 @@ export default function UserPage() {
                 type='button'
                 className='inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
                 aria-controls='mobile-menu'
-                aria-expanded={isMenuOpen ? 'true' : 'false'}
-                onClick={toggleMobileMenu}>
+                aria-expanded={isMenuOpen}
+                onClick={toggleMobileMenu}
+              >
                 <span className='sr-only'>Open main menu</span>
                 <svg
                   className={`${isMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
@@ -139,7 +123,8 @@ export default function UserPage() {
                   viewBox='0 0 24 24'
                   strokeWidth='2'
                   stroke='currentColor'
-                  aria-hidden='true'>
+                  aria-hidden='true'
+                >
                   <path
                     strokeLinecap='round'
                     strokeLinejoin='round'
@@ -152,7 +137,8 @@ export default function UserPage() {
                   viewBox='0 0 24 24'
                   strokeWidth='2'
                   stroke='currentColor'
-                  aria-hidden='true'>
+                  aria-hidden='true'
+                >
                   <path
                     strokeLinecap='round'
                     strokeLinejoin='round'
@@ -167,12 +153,12 @@ export default function UserPage() {
         {isMenuOpen && (
           <div className='md:hidden' id='mobile-menu'>
             <div className='space-y-1 px-2 pb-3 pt-2 sm:px-3'>
-              <Link
-                href='#'
-                className='block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white'
-                onClick={handleLogout}>
+              <button
+                className='block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white'
+                onClick={handleLogout}
+              >
                 Cerrar Sesión
-              </Link>
+              </button>
             </div>
           </div>
         )}
