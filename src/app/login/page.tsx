@@ -42,22 +42,28 @@ export default function Login() {
       });
 
       if (response.ok) {
-        const { token, logoutToken } = await response.json();
+        const { token, userId, userName } = await response.json();
 
-        // Guardar los tokens en localStorage
+        // Guardar los datos en localStorage
         localStorage.setItem("token", token);
-        localStorage.setItem("logoutToken", logoutToken);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("userName", userName);
 
-        // Verificar si los tokens se guardaron correctamente
+        // Verificar si los datos se guardaron correctamente
         console.log("Token guardado:", localStorage.getItem("token"));
-        console.log("LogoutToken guardado:", localStorage.getItem("logoutToken"));
+        console.log("UserId guardado:", localStorage.getItem("userId"));
+        console.log("UserName guardado:", localStorage.getItem("userName"));
 
-        const { role } = JSON.parse(atob(token.split(".")[1]));
+        // Decodificar el token para obtener el rol
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const { role } = payload;
 
         if (role === "admin") {
           setError("Favor de verificar su correo.");
+          // Limpiar los datos almacenados si el rol es admin
           localStorage.removeItem("token");
-          localStorage.removeItem("logoutToken");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("userName");
         } else {
           router.push("/live");
         }
@@ -76,10 +82,9 @@ export default function Login() {
     }
   };
 
-
   const handleBack = () => {
     router.push('/');
-  };;
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
@@ -140,4 +145,3 @@ export default function Login() {
     </div>
   );
 }
-

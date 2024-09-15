@@ -5,7 +5,6 @@ import User from "@/models/User";
 import { formatInTimeZone, toDate } from 'date-fns-tz';
 import { addHours, isAfter } from "date-fns";
 
-// Función para obtener la fecha y hora actual en la zona horaria de la Ciudad de México
 function getMexicoCityTime() {
   return formatInTimeZone(new Date(), 'America/Mexico_City', "yyyy-MM-dd'T'HH:mm:ssXXX");
 }
@@ -37,7 +36,6 @@ export async function POST(request: Request) {
       expiresIn: "6h",
     });
 
-    // Obtener la hora actual de México y calcular la expiración
     const currentMexicoTime = getMexicoCityTime();
     const sessionExpirationLimit = toDate(formatInTimeZone(new Date("2024-09-26T13:00:00Z"), 'America/Mexico_City', "yyyy-MM-dd'T'HH:mm:ssXXX"));
     let sessionExpiresAt = toDate(formatInTimeZone(addHours(new Date(), 6), 'America/Mexico_City', "yyyy-MM-dd'T'HH:mm:ssXXX"));
@@ -46,7 +44,6 @@ export async function POST(request: Request) {
       sessionExpiresAt = sessionExpirationLimit;
     }
 
-    // Actualizar campos en el modelo User
     user.sessionToken = token;
     user.sessionExpiresAt = sessionExpiresAt;
     user.sessionStartedAt = toDate(currentMexicoTime);
@@ -62,7 +59,13 @@ export async function POST(request: Request) {
       lastActiveAt: formatInTimeZone(user.lastActiveAt, 'America/Mexico_City', "yyyy-MM-dd HH:mm:ss zzz")
     });
 
-    return NextResponse.json({ message: "Inicio de sesión exitoso", token }, { status: 200 });
+    // Incluir el `userId` y el `name` en la respuesta
+    return NextResponse.json({ 
+      message: "Inicio de sesión exitoso", 
+      token, 
+      userId: user._id, // Enviar el userId
+      name: user.name // Asegúrate de que "user.name" está definido en tu esquema
+    }, { status: 200 });
 
   } catch (error) {
     console.error("Error en el inicio de sesión:", error);

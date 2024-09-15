@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import LiveQuestions from '../components/LiveQuestions';
 
 export default function UserPage() {
   const router = useRouter();
@@ -16,8 +17,8 @@ export default function UserPage() {
       // Opcionalmente, puedes hacer una llamada a la API para invalidar el token en el servidor
       // await fetch('/api/logout', { method: 'POST' });
 
-      // Elimina el token del almacenamiento local
-      localStorage.removeItem('token');
+      // Elimina todos los elementos del almacenamiento local
+      localStorage.clear();
       
       // Cierra el dropdown y el menú móvil
       setShowDropdown(false);
@@ -176,6 +177,7 @@ export default function UserPage() {
             ></iframe>
           </div>
         </div>
+        <LiveQuestions />
       </main>
     </div>
   );

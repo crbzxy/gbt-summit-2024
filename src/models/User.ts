@@ -12,19 +12,20 @@ interface IUser extends Document {
   registrationType: string;
   sessionToken?: string;
   sessionExpiresAt?: Date;
-  sessionStartedAt?: Date; // Añadir este campo para almacenar el inicio de la sesión
+  sessionStartedAt?: Date;
   lastActiveAt?: Date;
   deviceId?: string;
-  logoutToken?: string; // Token para controlar el logout
+  logoutToken?: string;
   password?: string;
 
-  comparePassword(password: string): Promise<boolean>; // Método para comparar contraseñas
-  isSessionValid(): boolean; // Método para validar la sesión
+  comparePassword(password: string): Promise<boolean>;
+  isSessionValid(): boolean;
+  updateLastActive(): Promise<void>;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true, match: /\S+@\S+\.\S+/ },
   phone: { type: String },
   company: { type: String },
   position: { type: String },
@@ -32,26 +33,30 @@ const userSchema = new mongoose.Schema<IUser>({
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
   registrationType: { type: String, enum: ['general', 'presencial', 'virtual'], default: 'general' },
   sessionToken: { type: String },
-  sessionExpiresAt: { type: Date },  // Fecha de expiración de la sesión
-  sessionStartedAt: { type: Date },  // Fecha de inicio de la sesión
-  lastActiveAt: { type: Date },  // Fecha de última actividad
-  deviceId: { type: String },  // ID del dispositivo
-  logoutToken: { type: String }, // Token de salida para validar el cierre de sesión
-  password: { type: String },  // Campo para la contraseña
+  sessionExpiresAt: { type: Date },
+  sessionStartedAt: { type: Date },
+  lastActiveAt: { type: Date },
+  deviceId: { type: String },
+  logoutToken: { type: String },
+  password: { type: String },
 });
 
-// Middleware para encriptar la contraseña antes de guardar
+// Middleware para encriptar la contraseña antes de guardar y actualizar la última actividad
 userSchema.pre('save', async function (next: (err?: CallbackError) => void) {
   const user = this as IUser;
 
-  // Si no hay contraseña o no se ha modificado, continuar
-  if (!user.password || !user.isModified('password')) {
-    return next();
-  }
-  
   try {
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
+    // Si la contraseña fue modificada, la encriptamos
+    if (user.password && user.isModified('password')) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(user.password, salt);
+    }
+
+    // Actualizamos la última actividad
+    if (user.isModified()) {
+      user.lastActiveAt = new Date();
+    }
+
     next();
   } catch (err) {
     next(err as CallbackError);
@@ -71,20 +76,12 @@ userSchema.methods.isSessionValid = function (): boolean {
   return new Date() < user.sessionExpiresAt;
 };
 
-userSchema.methods.updateLastActive = function () {
+// Método para actualizar la última actividad
+userSchema.methods.updateLastActive = async function (): Promise<void> {
   const user = this as IUser;
   user.lastActiveAt = new Date();
-  return user.save();
+  await user.save();
 };
-
-// Middleware que actualiza la última actividad antes de guardar
-userSchema.pre('save', function (next: (err?: CallbackError) => void) {
-  const user = this as IUser;
-  if (user.isModified()) {
-    user.lastActiveAt = new Date();
-  }
-  next();
-});
 
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 

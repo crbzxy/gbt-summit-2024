@@ -17,7 +17,7 @@ export default function AdminLogin() {
     // Elimina cualquier token almacenado en localStorage o sessionStorage
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
-  
+
     // Verificar si el usuario ya está autenticado como admin
     const token = localStorage.getItem("token");
     if (token) {
@@ -27,7 +27,6 @@ export default function AdminLogin() {
       }
     }
   }, [router]);
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,12 +39,16 @@ export default function AdminLogin() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),  // Aquí password debe ser el texto claro
+        body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
-        const { token } = await response.json();
+        const { token, name, userId } = await response.json();  // Recibe el userId y el nombre del usuario
+
+        // Almacena el token, el userId y el nombre en localStorage
         localStorage.setItem("token", token);
+        localStorage.setItem("userName", name);  // Almacena el nombre del usuario
+        localStorage.setItem("userId", userId);  // Almacena el userId del usuario
 
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
@@ -74,14 +77,13 @@ export default function AdminLogin() {
     router.push("/admin"); // Redirigir a la página de registro de administradores
   };
 
-  
- const handleBack = () => {
+  const handleBack = () => {
     router.push('/');
-  };;
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-tr from-[#006FCF] via-[#00175A] to-[#006FCF]">
-       <Image
+      <Image
         src="/gbtwhite.svg"
         alt="American Express Logo"
         width={120}

@@ -69,8 +69,14 @@ export async function POST(request: Request) {
       lastActiveAt: formatInTimeZone(user.lastActiveAt, MEXICO_TIMEZONE, "yyyy-MM-dd HH:mm:ss zzz")
     });
 
+    // Regresamos también el nombre del usuario junto con el token
     return NextResponse.json(
-      { message: "Inicio de sesión exitoso", token },
+      { 
+        message: "Inicio de sesión exitoso", 
+        token, 
+        userId: user._id, 
+        userName: user.name // Asegúrate de que 'name' sea el campo correcto para el nombre del usuario
+      },
       { status: 200 }
     );
   } catch (err: unknown) {
