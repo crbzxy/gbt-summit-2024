@@ -180,7 +180,7 @@ const LiveQuestions = () => {
             {/* Botón Flotante */}
             <button
                 onClick={toggleDrawer}
-                className={`absolute bottom-20 right-16 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer transition-transform transform hover:scale-105 z-50 flex items-center justify-center space-x-2 ${isCooldown ? 'opacity-50 cursor-not-allowed' : ''} ${isButtonVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+                className={`absolute bottom-24 right-16 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer transition-transform transform hover:scale-105 z-50 flex items-center justify-center space-x-2 ${isCooldown ? 'opacity-50 cursor-not-allowed' : ''} ${isButtonVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
             >
                 <span className="text-lg">💬 Preguntas</span>
                 {isCooldown && <span className="text-xs">{formatTime(cooldownTime)}</span>}
