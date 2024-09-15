@@ -33,13 +33,15 @@ const LiveQuestions = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isCooldown, setIsCooldown] = useState(false);
     const [cooldownTime, setCooldownTime] = useState(0);
+    const [isButtonVisible, setIsButtonVisible] = useState(true); // Para la visibilidad del botón
+    const [hasError, setHasError] = useState(false); // Controla si hay error en el textarea
     const cooldownRef = useRef<NodeJS.Timeout | null>(null);
-
-    const COOLDOWN_DURATION = 62; // Duración del cooldown en segundos
+    const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Para manejar la inactividad
+    const COOLDOWN_DURATION = 62;
     const COOLDOWN_STORAGE_KEY = 'liveQuestionsCooldownStart';
     const drawerRef = useRef<HTMLDivElement | null>(null);
 
-    // Recuperación de userName y userId de localStorage
+    // Recuperar userName y userId de localStorage
     useEffect(() => {
         const storedUserName = localStorage.getItem('userName');
         const storedUserId = localStorage.getItem('userId');
@@ -91,14 +93,44 @@ const LiveQuestions = () => {
         };
     }, []);
 
+    // Iniciar temporizador de inactividad
+    const resetInactivityTimeout = () => {
+        if (inactivityTimeoutRef.current) clearTimeout(inactivityTimeoutRef.current);
+
+        inactivityTimeoutRef.current = setTimeout(() => {
+            setIsButtonVisible(false); // Oculta el botón tras 5 segundos de inactividad
+        }, 5000);
+    };
+
+    useEffect(() => {
+        // Restablecer el temporizador de inactividad en interacciones del usuario
+        const resetTimer = () => {
+            setIsButtonVisible(true); // Muestra el botón al detectar interacción
+            resetInactivityTimeout();
+        };
+
+        // Escuchar eventos de interacción
+        window.addEventListener('mousemove', resetTimer);
+        window.addEventListener('keydown', resetTimer);
+
+        resetInactivityTimeout(); // Inicia el temporizador al cargar
+
+        return () => {
+            window.removeEventListener('mousemove', resetTimer);
+            window.removeEventListener('keydown', resetTimer);
+        };
+    }, []);
+
     // Agregar pregunta
     const handleAddQuestion = async () => {
         if (!userName || !userId || !newQuestion.trim()) {
+            setHasError(true); // Marca el textarea como con error
             toast.error('Faltan campos obligatorios');
             return;
         }
 
         setIsLoading(true);
+        setHasError(false); // Elimina el error si todo está correcto
 
         try {
             const res = await fetch('/api/questions', {
@@ -148,9 +180,7 @@ const LiveQuestions = () => {
             {/* Botón Flotante */}
             <button
                 onClick={toggleDrawer}
-                className={`absolute bottom-9 right-16 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer transition-transform transform hover:scale-105 z-50 flex items-center justify-center space-x-2 ${
-                    isCooldown ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                className={`absolute bottom-20 right-16 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer transition-transform transform hover:scale-105 z-50 flex items-center justify-center space-x-2 ${isCooldown ? 'opacity-50 cursor-not-allowed' : ''} ${isButtonVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
             >
                 <span className="text-lg">💬 Preguntas</span>
                 {isCooldown && <span className="text-xs">{formatTime(cooldownTime)}</span>}
@@ -159,14 +189,11 @@ const LiveQuestions = () => {
             {/* Drawer */}
             <div
                 ref={drawerRef}
-                className={`fixed bottom-0 right-0 bg-white shadow-lg transition-transform transform ${
-                    isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
-                } w-80 md:w-96 h-auto p-6 z-50 rounded-l-lg overflow-y-auto`}
+                className={`fixed bottom-0 right-0 bg-white shadow-lg transition-transform transform ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'} w-80 md:w-96 h-auto p-6 z-50 rounded-l-lg overflow-y-auto`}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="drawer-title"
             >
-
                 {userName ? (
                     <>
                         <p className="text-sm mb-4">
@@ -177,7 +204,9 @@ const LiveQuestions = () => {
                             onChange={(e) => setNewQuestion(e.target.value)}
                             placeholder="Escribe tu pregunta"
                             disabled={isLoading}
-                            className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-600 mb-4"
+                            className={`w-full p-3 border rounded-lg resize-none focus:outline-none focus:ring-2 mb-4 ${
+                                hasError ? 'border-red-500 focus:ring-red-600' : 'border-gray-300 focus:ring-blue-600'
+                            }`}
                             rows={4}
                         />
 
@@ -185,9 +214,7 @@ const LiveQuestions = () => {
                             <button
                                 onClick={handleAddQuestion}
                                 disabled={isLoading}
-                                className={`px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all ${
-                                    isLoading ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
+                                className={`px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
                                 {isLoading ? <Spinner /> : 'Enviar Pregunta'}
                             </button>
