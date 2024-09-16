@@ -1,26 +1,23 @@
-"use client"; // Esto indica que es un componente del lado del cliente
-
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script"; // Importamos el componente Script de Next.js
+import Script from "next/script";
+import ClientLayout from "./ClientLayout";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-let metadata: Metadata = {
+export const metadata = {
   title: "Amex GBT Summit 2024",
   description: "Amex GBT Summit 2024",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="es-mx">
       <head>
-        {/* Google Analytics Tag */}
         <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=G-NYWPJ79YRE`}
@@ -37,11 +34,9 @@ export default function RootLayout({
             `,
           }}
         />
-{/* Google tag (gtag.js) */}
-
       </head>
       <body className={inter.className}>
-        {children}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

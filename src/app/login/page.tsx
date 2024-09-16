@@ -126,7 +126,7 @@ export default function Login() {
           <p className="text-sm text-gray-600">
             ¿No tienes una cuenta?{" "}
             <button
-              onClick={() => router.push("/registro")}
+              onClick={() => window.location.href = 'https://www.gbtsummit2024.com/#registro'}
               className="text-blue-600 hover:underline"
             >
               Regístrate aquí

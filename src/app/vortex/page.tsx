@@ -74,7 +74,7 @@ export default function AdminLogin() {
   };
 
   const handleRegisterRedirect = () => {
-    router.push("/admin"); // Redirigir a la página de registro de administradores
+    router.push("/registroadmin"); // Redirigir a la página de registro de administradores
   };
 
   const handleBack = () => {
