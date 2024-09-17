@@ -73,11 +73,11 @@ export default function Navbar() {
                                     Agenda
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link href="/login" className="bg-[#2563eb] text-white hover:bg-blue-500 px-6 py-2 rounded-xl text-sm font-medium transition duration-300">
                                     Login
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </nav>
                 </div>
