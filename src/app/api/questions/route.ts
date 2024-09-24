@@ -9,13 +9,29 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     console.log('Datos recibidos en la solicitud:', body);
-    const { userName, userId, question } = body;
+    
+    // Desestructurar los campos recibidos
+    const { userName, userId, userEmail, question, tag } = body;
 
-    if (!userName || !userId || !question) {
-      return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
-    }
+   // Validar que se reciban los campos obligatorios
+if (!userName || !question || !tag) {
+  return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
+}
 
-    const newQuestion = new Question({ userName, userId, question });
+
+    // Si hay userId, se usa, de lo contrario se usa userEmail
+    const idToUse = userId || userEmail;
+
+    // Crear una nueva pregunta usando el userId o userEmail como userId
+    const newQuestion = new Question({
+      userName,
+      userId: idToUse,   // Usar el userId si está disponible, de lo contrario el userEmail
+      userEmail,
+      question,
+      tag,               // Añadir el tag a la pregunta
+    });
+
+    // Guardar la nueva pregunta en la base de datos
     await newQuestion.save();
 
     return NextResponse.json({ success: true, data: newQuestion }, { status: 201 });

@@ -166,7 +166,7 @@ export default function UserPage() {
       </nav>
 
       <main className='bg-gray-100'>
-        <div className='mx-auto px-4 py-6 sm:px-6 lg:px-8 flex flex-col gap-6'>
+        <div className='mx-auto px-4 py-2 sm:px-6 lg:px-8 flex flex-col gap-6'>
           <div className='relative w-full h-4/5 overflow-hidden bg-white shadow-lg rounded-lg' style={{ padding: '46.25% 0 0 0', position: 'relative' }}>
             <iframe
               title='gbt-summit'
@@ -177,7 +177,7 @@ export default function UserPage() {
             ></iframe>
           </div>
         </div>
-        <LiveQuestions />
+        <LiveQuestions tag='audiencia' />
       </main>
     </div>
   );

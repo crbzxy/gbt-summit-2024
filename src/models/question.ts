@@ -1,24 +1,15 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import mongoose from 'mongoose';
 
-// Definir el esquema de Question
-const questionSchema = new Schema({
-  userName: {
-    type: String,
-    required: true,
+const questionSchema = new mongoose.Schema(
+  {
+    userName: { type: String, required: true },
+    userId: { type: String, default: 'anonymous' }, // Default para usuarios no autenticados
+    userEmail: { type: String, default: '' },       // Opcional, solo si el usuario no está autenticado
+    question: { type: String, required: true },
+    tag: { type: String, required: true },          // Nuevo campo para identificar el origen
   },
-  userId: {
-    type: String,
-    required: true,
-  },
-  question: {
-    type: String,
-    required: true,
-  },
-}, {
-  timestamps: true, // Añade createdAt y updatedAt automáticamente
-});
+  { timestamps: true }  // Para incluir createdAt y updatedAt automáticamente
+);
 
-// Verificar si el modelo ya está definido para evitar el error de sobreescritura
-const Question = models.Question || model('Question', questionSchema);
-
+const Question = mongoose.models.Question || mongoose.model('Question', questionSchema);
 export default Question;

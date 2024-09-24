@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 type Question = {
@@ -8,6 +8,7 @@ type Question = {
     userName: string;
     userEmail: string;
     question: string;
+    tag: string;  // Asegúrate de incluir el campo tag en el tipo
     createdAt: string;
 };
 
@@ -186,6 +187,7 @@ const GetQuestions: React.FC = () => {
                     <tr>
                         <th className='py-3 px-4 text-left font-semibold'>Nombre</th>
                         <th className='py-3 px-4 text-left font-semibold'>Pregunta</th>
+                        <th className='py-3 px-4 text-left font-semibold'>Tag</th> {/* Nueva columna para el tag */}
                         <th className='py-3 px-4 text-left font-semibold'>Última Conexión</th>
                     </tr>
                 </thead>
@@ -197,6 +199,7 @@ const GetQuestions: React.FC = () => {
                         >
                             <td className='py-4 px-4 text-sm text-white'>{question.userName}</td>
                             <td className='py-4 px-4 text-sm text-white'>{question.question}</td>
+                            <td className='py-4 px-4 text-sm text-white'>{question.tag}</td> {/* Mostrar el tag */}
                             <td className='py-4 px-4 text-sm text-white'>
                                 {formatDateToMexicoTime(question.createdAt)}
                             </td>
