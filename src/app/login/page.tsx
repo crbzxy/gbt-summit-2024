@@ -102,56 +102,59 @@ export default function Login() {
           </button>
         </form>
         {loading && <Loader />}
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
-            ¿No tienes una cuenta?{' '}
-            <button
-              onClick={() => window.location.href = 'https://www.gbtsummit2024.com/#registro'}
-              className="text-blue-600 hover:underline"
-            >
-              Regístrate aquí
-            </button>
-          </p>
+        
+       
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600">
+              ¿No tienes una cuenta?{' '}
+              <button
+                onClick={() => window.location.href = 'https://www.gbtsummit2024.com/#registro'}
+                className="text-blue-600 hover:underline"
+              >
+                Regístrate aquí
+              </button>
+            </p>
 
-          
-          <p className="text-sm text-gray-600">
-            <button
-              onClick={() => window.open('https://wa.me/1234567890', '_blank')}
-              className="text-blue-600 hover:underline"
-            >
-              Necesita soporte, contáctenos por WhatsApp
-            </button>
-          </p>
+            <p className="text-sm mt-4">
+              <button
+                onClick={() => window.open('https://wa.me/1234567890', '_blank')}
+                className="text-blue-500 hover:underline transition-all"
+              >
+                ¿Necesitas soporte? Contáctanos por WhatsApp
+              </button>
+            </p>
+          </div>
+      
 
-        </div>
         <div className="mt-4 text-center absolute left-8 top-7">
-          <button onClick={handleBack} className="text-sm text-white hover:underline">
+          <button onClick={handleBack} className="text-sm text-white hover:underline transition-all">
             &larr; Volver
           </button>
         </div>
       </div>
 
       {/* Botón flotante de WhatsApp */}
-      <button
-        onClick={() => window.open('https://wa.me/1234567890', '_blank')}
-        className="fixed bottom-4 right-4 bg-white p-3 rounded-full shadow-lg"
-      >
-        <Image src="/whats.png" alt="WhatsApp" width={40} height={40} />
-      </button>
-
+    
+        <button
+          onClick={() => window.open('https://wa.me/1234567890', '_blank')}
+          className="fixed bottom-4 right-4 bg-green-500 p-3 rounded-full shadow-lg transform transition-transform hover:scale-110 active:scale-95"
+        >
+          <Image src="/whats.png" alt="WhatsApp" width={40} height={40} />
+        </button>
+    
       {/* Modal de soporte */}
       {isSupportModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">Soporte de Autenticación</h2>
+            <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md transform transition-all hover:scale-105 outline-none focus:outline-none">
+            <h2 className="text-2xl font-bold text-center mb-4">Soporte de Autenticación</h2>
             <SupportQuestion />
             <button
               onClick={closeModal}
-              className="w-full mt-4 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
+              className="w-full mt-4 text-center py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-all"
             >
               Cerrar
             </button>
-          </div>
+            </div>
         </div>
       )}
     </div>

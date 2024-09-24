@@ -4,6 +4,7 @@ import { Toaster, toast } from 'react-hot-toast';
 const SupportQuestion = () => {
   const [email, setEmail] = useState('');
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [phone, setPhone] = useState(''); // Estado para el número de teléfono
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailSending, setEmailSending] = useState(false); // Estado para enviar el correo
@@ -66,6 +67,13 @@ const SupportQuestion = () => {
       return;
     }
 
+    if (!phone.trim()) {
+      toast.error('Por favor ingresa un número de teléfono.');
+      return;
+    }
+
+    const concatenatedMessage = `Número de teléfono: ${phone}. Mensaje: ${message}`; // Concatenar teléfono y mensaje
+
     setLoading(true);
 
     try {
@@ -75,14 +83,18 @@ const SupportQuestion = () => {
         body: JSON.stringify({
           userName: email, // Usar el correo almacenado como userName
           userEmail: email,
-          question: message,
+          question: concatenatedMessage, // Enviar el mensaje concatenado
           tag: 'support',
         }),
       });
 
       if (res.ok) {
         setMessage('');
-        toast.success('Mensaje de soporte enviado correctamente.');
+        setPhone(''); // Limpiar el número de teléfono después de enviar
+        toast.success('Tu mensaje ha sido enviado con éxito. Nos pondremos en contacto contigo lo antes posible.', {
+          duration: 8000, // El toast será visible durante 8 segundos
+        });
+        
       } else {
         toast.error('Error al enviar el mensaje.');
       }
@@ -94,8 +106,9 @@ const SupportQuestion = () => {
   };
 
   return (
+   <>
     <div className="p-6 max-w-md mx-auto">
-      <Toaster position="top-right" />
+      
 
       {/* Mostrar campo para ingresar el correo si no está confirmado */}
       {!isConfirmed ? (
@@ -118,13 +131,26 @@ const SupportQuestion = () => {
         </div>
       ) : (
         <div>
-             <h2 className="text-lg font-bold mb-4">Si necesitas soporte, ingresa tu número y mensaje</h2>
+          <h2 className="text-lg font-bold mb-4">Si necesitas soporte, ingresa tu número y mensaje</h2>
+          
+          {/* Campo de número de teléfono */}
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Número de teléfono"
+            className="w-full p-2 border rounded mb-4"
+          />
+
+          {/* Campo de mensaje */}
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Escribe tu mensaje"
             className="w-full p-2 border rounded mb-4"
           />
+
+          {/* Botón de enviar */}
           <button
             onClick={handleSendMessage}
             className={`w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -135,6 +161,8 @@ const SupportQuestion = () => {
         </div>
       )}
     </div>
+    <Toaster position="top-center"  />
+   </>
   );
 };
 
