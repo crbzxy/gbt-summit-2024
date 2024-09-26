@@ -81,7 +81,7 @@ Los siguientes endpoints están disponibles en la API:
       "name": "Nombre del Usuario",
       "email": "correo@ejemplo.com",
       "password": "contraseña123",
-      "phone": "1234567890",
+      "phone": "5545694354",
       "company": "Empresa XYZ",
       "position": "Puesto",
       "registrationType": "home" // Puede ser 'home', 'presencial', o 'remoto'
