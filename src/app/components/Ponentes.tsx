@@ -42,7 +42,7 @@ const PonentesPage = () => {
     {
       id: "2",
       name: "Fabiola Urtiaga",
-      title: "Travel Manager para Casa Cuervo",
+      title: "Gerente Servicios Generales para José Cuervo",
       category: "Panel “Mujeres exitosas en la industria de viajes”",
       description: `
                 Licenciada en Administración de Instituciones por la ESDAI, UP y Chef por The Culinary Insitute of America y Sommelier por la Universad del Tepeyac.
