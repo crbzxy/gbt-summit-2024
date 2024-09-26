@@ -137,9 +137,9 @@ export default function Login() {
     
         <button
           onClick={() => window.open('https://wa.me/5545694354', '_blank')}
-          className="fixed bottom-4 right-4 bg-green-500 p-3 rounded-full shadow-lg transform transition-transform hover:scale-110 active:scale-95"
+          className="fixed bottom-4 right-4 bg-green-500 p-1 rounded-full shadow-lg transform transition-transform hover:scale-110 active:scale-95"
         >
-          <Image src="/whats.png" alt="WhatsApp" width={40} height={40} />
+          <Image src="/Whats.png" alt="WhatsApp" width={40} height={40} />
         </button>
     
       {/* Modal de soporte */}
