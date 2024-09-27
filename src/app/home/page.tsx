@@ -89,35 +89,7 @@ export default function Home() {
 
         {/* Temporizador */}
         <div className="flex flex-col items-center mb-12 lg:mb-0">
-          <h2 className="text-xl lg:text-2xl font-extrabold text-[#006FCF] mb-4 text-center">
-            Faltan
-          </h2>
-          <div className="flex flex-wrap justify-center gap-2 mb-8 text-center">
-            <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
-                {timeLeft.days}
-              </span>
-              <span className="text-sm font-semibold text-[#006FCF]">días</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
-                {timeLeft.hours}
-              </span>
-              <span className="text-sm font-semibold text-[#006FCF]">horas</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
-                {timeLeft.minutes}
-              </span>
-              <span className="text-sm font-semibold text-[#006FCF]">mins</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xl font-bold text-white bg-[#00175A] rounded-full w-14 h-14 flex items-center justify-center">
-                {timeLeft.seconds}
-              </span>
-              <span className="text-sm font-semibold text-[#006FCF]">segs</span>
-            </div>
-          </div>
+   
         </div>
       </div>
     </main>
